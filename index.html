@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Object3 Engine</title>
+
+		<script type="text/javascript" src="glMatrix-0.9.5.min.js"></script>
+		<script type="text/javascript" src="shader.js"></script>
+		<script type="text/javascript" src="object3d.js"></script>
+		<script type="text/javascript" src="camera.js"></script>
+		<script type="text/javascript" src="shape.js"></script>
+		<script type="text/javascript" src="cube.js"></script>
+		<script type="text/javascript" src="canvas.js"></script>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var canvas = new Canvas( 800, 600 );
+
+			var cube = new Cube(0,0,-9);
+			var camera = new Camera(0,0,0);
+
+			canvas.addCamera( camera );
+			canvas.addShape( cube );
+			canvas.addShape( new Cube( -9, 0,0 )  );
+			canvas.addShape( new Cube( 9, 0,0 )  );
+			canvas.addShape( new Cube( 0, 0, 9 )  );
+
+			var cont = 0;
+			var dir  = true;
+			anim();
+
+			function anim() {
+				if ( cont++ > 30 ) {
+					cont = -30;
+					dir = !dir;
+				}
+
+					camera.rotateY( -0.01 );
+
+				cube.rotateZ(0.1);
+				cube.rotateY(0.1);
+				canvas.update();
+				window.setTimeout(anim, 50);
+			}
+		</script>
+	</body>
+</html>
