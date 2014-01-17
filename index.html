@@ -22,7 +22,6 @@
 
 			canvas.addCamera( camera );
 			canvas.addShape( cube );
-			canvas.addShape( new Cube( -9, 0,0 )  );
 			canvas.addShape( new Cube( 9, 0,0 )  );
 			canvas.addShape( new Cube( 0, 0, 9 )  );
 
@@ -34,14 +33,19 @@
 				if ( cont++ > 30 ) {
 					cont = -30;
 					dir = !dir;
+					// camera.setPosition( 0, 0, 0 );
 				}
 
-					camera.rotateY( -0.01 );
+				// camera.setX( cont / 10 );
+				// camera.setY( cont / 10 );
+				// camera.setZ( cont / 10 );
+				cube.rotateY( 0.1 );
 
-				cube.rotateZ(0.1);
-				cube.rotateY(0.1);
+				// cube.rotateX(0.1);
+				// cube.rotateY(0.1);
+				// cube.translateX(0.1);
 				canvas.update();
-				window.setTimeout(anim, 50);
+				window.setTimeout(anim, 100);
 			}
 		</script>
 	</body>

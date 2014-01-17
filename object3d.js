@@ -32,7 +32,7 @@
  * @remarks: Special thanks to Brandon Jones for his excellent work on       *
  * glMatrix lib.                                                             *
  *---------------------------------------------------------------------------*/
-
+ 
 function Object3D( x, y, z ){
 	this._alpha = 0.0;
 	this._beta  = 0.0;
@@ -43,7 +43,7 @@ function Object3D( x, y, z ){
 	this._scaleZ = 1.0;
 
 	// Create a transform matrix;
-	this._transform = new glMatrixArrayType( 16 );
+	this._transform = new Float32Array( 16 );
 
 	// Inicialize the transform matrix;
 	this.reset();
@@ -124,6 +124,10 @@ Object3D.prototype.rotateZ = function( gama ) {
 	this._transform[5] = a01 * -s + a11 * c;
 	this._transform[6] = a02 * -s + a12 * c;
 	this._transform[7] = a03 * -s + a13 * c;
+}
+
+Object3D.prototype.lookAt = function( object3d ) {
+
 }
 
 Object3D.prototype.setRotation = function( alpha, beta, gama ) {
@@ -221,6 +225,14 @@ Object3D.prototype.reset = function() {
 	this._transform[13] = 0.0;
 	this._transform[14] = 0.0;
 	this._transform[15] = 1.0;
+
+	this._scaleX = 1.0;
+	this._scaleY = 1.0;
+	this._scaleZ = 1.0;
+
+	this._alpha = 0.0;
+	this._beta  = 0.0;
+	this._gama  = 0.0;
 }
 
 Object3D.prototype.translateX = function( x ) {

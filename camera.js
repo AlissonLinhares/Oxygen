@@ -49,3 +49,15 @@ Camera.prototype.setFarClip = function( farClip ) {
 Camera.prototype.setAspectRation = function( aspectRation ) {
 	this._aspectRation = aspectRation;
 }
+
+Camera.prototype.setPosition = function( x, y, z ) {
+	this._transform[12] = x;
+	this._transform[13] = y;
+	this.setZ( z );
+}
+
+Camera.prototype.setZ = function( z ) {
+	this._transform[14] = -( this._farClip * this._nearClip * 2 ) / ( this._farClip - this._nearClip );
+	this._transform[14] += this._transform[10] * z;
+	this._transform[15] = this._transform[11] * z;
+}

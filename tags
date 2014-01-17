@@ -15,15 +15,15 @@ Camera.setAspectRation	camera.js	/^Camera.prototype.setAspectRation = function( 
 Camera.setFarClip	camera.js	/^Camera.prototype.setFarClip = function( farClip ) {$/;"	m
 Camera.setFildOfView	camera.js	/^Camera.prototype.setFildOfView = function( fildOfView ) {$/;"	m
 Camera.setNearClip	camera.js	/^Camera.prototype.setNearClip = function( nearClip ) {$/;"	m
+Camera.setPosition	camera.js	/^Camera.prototype.setPosition = function( x, y, z ) {$/;"	m
+Camera.setZ	camera.js	/^Camera.prototype.setZ = function( z ) {$/;"	m
 Canvas	canvas.js	/^function Canvas( width, height ) {$/;"	c
 Canvas.addCamera	canvas.js	/^Canvas.prototype.addCamera = function( camera ) {$/;"	m
 Canvas.addShape	canvas.js	/^Canvas.prototype.addShape = function( shape ) {$/;"	m
-Canvas.clear	canvas.js	/^Canvas.prototype.clear = function() {$/;"	m
+Canvas.clear	canvas.js	/^Canvas.prototype.clear = function( r, g, b ) {$/;"	m
+Canvas.removeShape	canvas.js	/^Canvas.prototype.removeShape = function( shape ) {$/;"	m
 Canvas.update	canvas.js	/^Canvas.prototype.update = function() {$/;"	m
 Cube	cube.js	/^\/*---------------------------------------------------------------------------*$/;"	c
-Cube	cube.js	/^function Cube( x, y, z ) {$/;"	f
-Cube._colors	cube.js	/^Cube.prototype._colors = [$/;"	m
-Cube._vertices	cube.js	/^Cube.prototype._vertices = [$/;"	m
 Object3D	object3d.js	/^function Object3D( x, y, z ){$/;"	c
 Object3D.getScaleX	object3d.js	/^Object3D.prototype.getScaleX = function() {$/;"	m
 Object3D.getScaleY	object3d.js	/^Object3D.prototype.getScaleY = function() {$/;"	m
@@ -32,6 +32,7 @@ Object3D.getTransform	object3d.js	/^Object3D.prototype.getTransform = function()
 Object3D.getX	object3d.js	/^Object3D.prototype.getX = function() {$/;"	m
 Object3D.getY	object3d.js	/^Object3D.prototype.getY = function() {$/;"	m
 Object3D.getZ	object3d.js	/^Object3D.prototype.getZ = function() {$/;"	m
+Object3D.lookAt	object3d.js	/^Object3D.prototype.lookAt = function( object3d ) {$/;"	m
 Object3D.reset	object3d.js	/^Object3D.prototype.reset = function() {$/;"	m
 Object3D.rotateX	object3d.js	/^Object3D.prototype.rotateX = function( alpha ) {$/;"	m
 Object3D.rotateY	object3d.js	/^Object3D.prototype.rotateY = function( beta ) {$/;"	m
@@ -52,12 +53,17 @@ Object3D.translateY	object3d.js	/^Object3D.prototype.translateY = function( y ) 
 Object3D.translateZ	object3d.js	/^Object3D.prototype.translateZ = function( z ) {$/;"	m
 Shape	shape.js	/^\/*---------------------------------------------------------------------------*$/;"	c
 Shape	shape.js	/^function Shape( x, y, z ) {$/;"	f
-Shape._colors	shape.js	/^Shape.prototype._colors = [];$/;"	m
-Shape._vertices	shape.js	/^Shape.prototype._vertices = [];$/;"	m
-Shape.getColorBuffer	shape.js	/^Shape.prototype.getColorBuffer = function() {$/;"	m
-Shape.getNumberOfVertices	shape.js	/^Shape.prototype.getNumberOfVertices = function() {$/;"	m
-Shape.getVertexBuffer	shape.js	/^Shape.prototype.getVertexBuffer = function() {$/;"	m
-Shape.setVertices	shape.js	/^Shape.prototype.setVertices = function( listVertices ) {$/;"	m
+Shape._glConfig	shape.js	/^Shape.prototype._glConfig = function( gl ) {$/;"	m
+Shape._glCreate	shape.js	/^Shape.prototype._glCreate = function( gl ) {$/;"	m
+Shape._glDestroy	shape.js	/^Shape.prototype._glDestroy = function( gl ) {$/;"	m
+Shape._glDraw	shape.js	/^Shape.prototype._glDraw = function( gl ) {$/;"	m
+Shape._glUpdate	shape.js	/^Shape.prototype._glUpdate = function( gl ) {$/;"	m
+Shape.colorBuffer	shape.js	/^Shape.prototype.colorBuffer       = null;$/;"	m
+Shape.normalBuffer	shape.js	/^Shape.prototype.normalBuffer      = null;$/;"	m
+Shape.textureBuffer	shape.js	/^Shape.prototype.textureBuffer     = null;$/;"	m
+Shape.vertexBuffer	shape.js	/^Shape.prototype.vertexBuffer      = null;$/;"	m
+Shape.vertexIndexBuffer	shape.js	/^Shape.prototype.vertexIndexBuffer = null;$/;"	m
+Shape.visible	shape.js	/^Shape.prototype.visible           = true;$/;"	m
 anim	index.html	/^			function anim() {$/;"	f
 compileShader	shader.js	/^function compileShader ( gl, source, type ) {$/;"	f
 createShaderProgram	shader.js	/^function createShaderProgram( gl, shaderVs, shaderFs ) {$/;"	f
