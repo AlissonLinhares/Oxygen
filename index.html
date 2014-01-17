@@ -10,18 +10,26 @@
 		<script type="text/javascript" src="camera.js"></script>
 		<script type="text/javascript" src="shape.js"></script>
 		<script type="text/javascript" src="cube.js"></script>
-		<script type="text/javascript" src="canvas.js"></script>
+		<script type="text/javascript" src="pyramid.js"></script>
+		<script type="text/javascript" src="sphere.js"></script>
+		<script type="text/javascript" src="oxygen.js"></script>
 	</head>
 
 	<body>
 		<script type="text/javascript">
 			var o2 = new Oxygen( 800, 600 );
-			var cube   = new o2.Cube( 0, 0, -9 );
+			var cube   = new o2.Cube( -4, 0, -9 );
+			var pyramid   = new o2.Pyramid( 0, 0, -9 );
+			var sphere   = new o2.Sphere( 4, 0, -9 , 1.5);
 			var camera = new o2.Camera( 0, 0, 0 );
 
 			o2.onUpdate = function() {
 				cube.rotateY( 0.1 );
 				cube.rotateX( 0.1 );
+				pyramid.rotateY( 0.1 );
+				pyramid.rotateX( 0.1 );
+				sphere.rotateY( 0.1 );
+				sphere.rotateX( 0.1 );
 			}
 
 			o2.start();

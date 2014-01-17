@@ -106,6 +106,8 @@ function Oxygen( width, height ) {
 
 /******************************** Object List ********************************/
 Oxygen.prototype.Cube       = Cube;
+Oxygen.prototype.Sphere     = Sphere;
+Oxygen.prototype.Pyramid    = Pyramid; 
 Oxygen.prototype.Shape      = Shape;
 Oxygen.prototype.Camera     = Camera;
 Oxygen.prototype.Object3D   = Object3D;
