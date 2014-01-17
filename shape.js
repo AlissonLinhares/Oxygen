@@ -2,27 +2,28 @@
  * Copyright (C) 2014 Alisson L. Carvalho, Alandesson L. Carvalho.           *
  * All rights reserved.                                                      *
  *                                                                           *
- * This file is part of the Object3 lib.                                     *
+ * This file is part of the Oxygen lib.                                      *
  *                                                                           *
- * The Object3 lib is free software: you can redistribute it and/or          *
+ * The Oxygen lib is free software: you can redistribute it and/or           *
  * modify it under the terms of the GNU Lesser General Public License as     *
  * published by the Free Software Foundation, either version 3 of the        *
  * License, or (at your option) any later version.                           *
  *                                                                           *
- * The Object3 lib is distributed in the hope that it will be useful,        *
+ * The Oxygen lib is distributed in the hope that it will be useful,         *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the              *
  * GNU Lesser General Public License for more details.                       *
  *                                                                           *
  * You should have received a copy of the GNU Lesser General Public License  *
- * along with the Object3 lib. If not, see <http://www.gnu.org/licenses/>.   *
+ * along with the Oxygen lib. If not, see <http://www.gnu.org/licenses/>.    *
  *---------------------------------------------------------------------------*/
 
-Shape.prototype = Object.create( Object3D.prototype );
-
-function Shape( x, y, z ) {
+var Shape = function( x, y, z ) {
 	Object3D.call( this, x, y, z );
+	this.create();
 }
+
+Shape.prototype = Object.create( Object3D.prototype );
 
 Shape.prototype.visible           = true;
 Shape.prototype.textureBuffer     = null;
@@ -31,26 +32,21 @@ Shape.prototype.vertexBuffer      = null;
 Shape.prototype.colorBuffer       = null;
 Shape.prototype.vertexIndexBuffer = null;
 
-Shape.prototype._glCreate = function( gl ) {
-	var vertexBuffer = gl.createBuffer();
-	gl.bindBuffer( gl.ARRAY_BUFFER, vertexBuffer );
-	gl.bufferData( gl.ARRAY_BUFFER, this.vertexBuffer, gl.STATIC_DRAW );
+Shape.prototype.create = function() {
+	if ( this.vertexBuffer )
+		this._glVertexBuffer      = Oxygen.glCreateArrayBuffer( this.vertexBuffer );
 
-	var colorBuffer = gl.createBuffer();
-	gl.bindBuffer( gl.ARRAY_BUFFER, colorBuffer );
-	gl.bufferData( gl.ARRAY_BUFFER, this.colorBuffer, gl.STATIC_DRAW );
+	if ( this.colorBuffer )
+		this._glColorBuffer       = Oxygen.glCreateArrayBuffer( this.colorBuffer );
 
-	var vertexIndexBuffer = gl.createBuffer();
-	gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer );
-	gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, this.vertexIndexBuffer, gl.STATIC_DRAW );
+	if ( this.vertexIndexBuffer )
+		this._glVertexIndexBuffer = Oxygen.glCreateElementBuffer( this.vertexIndexBuffer );
 
-	this._glVertexBuffer = vertexBuffer;
-	this._glColorBuffer  = colorBuffer;
-	this._glVertexIndexBuffer = vertexIndexBuffer;
-	this._glTextureBuffer = vertexIndexBuffer;
+	Oxygen.addShape( this );
 }
 
-Shape.prototype._glConfig = function( gl ) {
+Shape.prototype.config = function() {
+	var gl = Oxygen.getContext();
 	gl.uniformMatrix4fv( gl.program.mvMatrixUniform, false, this.getTransform() );
 
 	gl.bindBuffer( gl.ARRAY_BUFFER, this._glVertexBuffer );
@@ -65,9 +61,11 @@ Shape.prototype._glConfig = function( gl ) {
 	// }
 }
 
-Shape.prototype._glDraw = function( gl ) {
+Shape.prototype.draw = function() {
+	var gl = Oxygen.getContext();
+
 	if ( this.visible && this._glVertexBuffer ) {
-		this._glConfig( gl );
+		this.config( gl );
 
 		if ( this._glVertexIndexBuffer ) {
 			gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, this._glVertexIndexBuffer );
@@ -78,13 +76,13 @@ Shape.prototype._glDraw = function( gl ) {
 	}
 }
 
-Shape.prototype._glUpdate = function( gl ) {
+Shape.prototype.update = function() {
 
 }
 
-Shape.prototype._glDestroy = function( gl ) {
-	gl.deleteBuffer( this._glVertexBuffer );
-	gl.deleteBuffer( this._glColorBuffer );
-	gl.deleteBuffer( this._glVertexIndexBuffer );
-	gl.deleteBuffer( this._glTextureBuffer );
+Shape.prototype.destroy = function() {
+	Oxygen.glDeleteBuffer( this._glVertexBuffer );
+	Oxygen.glDeleteBuffer( this._glVertexBuffer );
+	Oxygen.glDeleteBuffer( this._glVertexIndexBuffer );
+	Oxygen.glDeleteBuffer( this._glTextureBuffer );
 }

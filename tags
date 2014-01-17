@@ -4,8 +4,8 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-Camera	camera.js	/^\/*---------------------------------------------------------------------------*$/;"	c
-Camera	camera.js	/^function Camera( x, y, z ) {$/;"	f
+Camera	camera.js	/^var Camera = function( x, y, z ) {$/;"	f
+Camera	camera.js	/^}$/;"	c
 Camera._aspectRation	camera.js	/^Camera.prototype._aspectRation = 4\/3;$/;"	m
 Camera._farClip	camera.js	/^Camera.prototype._farClip      = 100.0;$/;"	m
 Camera._fildOfView	camera.js	/^Camera.prototype._fildOfView   = 45;$/;"	m
@@ -17,14 +17,8 @@ Camera.setFildOfView	camera.js	/^Camera.prototype.setFildOfView = function( fild
 Camera.setNearClip	camera.js	/^Camera.prototype.setNearClip = function( nearClip ) {$/;"	m
 Camera.setPosition	camera.js	/^Camera.prototype.setPosition = function( x, y, z ) {$/;"	m
 Camera.setZ	camera.js	/^Camera.prototype.setZ = function( z ) {$/;"	m
-Canvas	canvas.js	/^function Canvas( width, height ) {$/;"	c
-Canvas.addCamera	canvas.js	/^Canvas.prototype.addCamera = function( camera ) {$/;"	m
-Canvas.addShape	canvas.js	/^Canvas.prototype.addShape = function( shape ) {$/;"	m
-Canvas.clear	canvas.js	/^Canvas.prototype.clear = function( r, g, b ) {$/;"	m
-Canvas.removeShape	canvas.js	/^Canvas.prototype.removeShape = function( shape ) {$/;"	m
-Canvas.update	canvas.js	/^Canvas.prototype.update = function() {$/;"	m
-Cube	cube.js	/^\/*---------------------------------------------------------------------------*$/;"	c
-Object3D	object3d.js	/^function Object3D( x, y, z ){$/;"	c
+Cube	cube.js	/^var Cube = function( x, y, z ) {$/;"	c
+Object3D	object3d.js	/^var Object3D = function( x, y, z ){$/;"	c
 Object3D.getScaleX	object3d.js	/^Object3D.prototype.getScaleX = function() {$/;"	m
 Object3D.getScaleY	object3d.js	/^Object3D.prototype.getScaleY = function() {$/;"	m
 Object3D.getScaleZ	object3d.js	/^Object3D.prototype.getScaleZ = function() {$/;"	m
@@ -51,20 +45,35 @@ Object3D.translate	object3d.js	/^Object3D.prototype.translate = function( x, y, 
 Object3D.translateX	object3d.js	/^Object3D.prototype.translateX = function( x ) {$/;"	m
 Object3D.translateY	object3d.js	/^Object3D.prototype.translateY = function( y ) {$/;"	m
 Object3D.translateZ	object3d.js	/^Object3D.prototype.translateZ = function( z ) {$/;"	m
-Shape	shape.js	/^\/*---------------------------------------------------------------------------*$/;"	c
-Shape	shape.js	/^function Shape( x, y, z ) {$/;"	f
-Shape._glConfig	shape.js	/^Shape.prototype._glConfig = function( gl ) {$/;"	m
-Shape._glCreate	shape.js	/^Shape.prototype._glCreate = function( gl ) {$/;"	m
-Shape._glDestroy	shape.js	/^Shape.prototype._glDestroy = function( gl ) {$/;"	m
-Shape._glDraw	shape.js	/^Shape.prototype._glDraw = function( gl ) {$/;"	m
-Shape._glUpdate	shape.js	/^Shape.prototype._glUpdate = function( gl ) {$/;"	m
+Oxygen	canvas.js	/^	}$/;"	c
+Oxygen	canvas.js	/^function Oxygen( width, height ) {$/;"	f
+Oxygen.Camera	canvas.js	/^Oxygen.prototype.Camera     = Camera;$/;"	m
+Oxygen.Cube	canvas.js	/^Oxygen.prototype.Cube       = Cube;$/;"	m
+Oxygen.Object3D	canvas.js	/^Oxygen.prototype.Object3D   = Object3D;$/;"	m
+Oxygen.Shape	canvas.js	/^Oxygen.prototype.Shape      = Shape;$/;"	m
+Oxygen.addCamera	canvas.js	/^	}$/;"	f
+Oxygen.addShape	canvas.js	/^	}$/;"	f
+Oxygen.getContext	canvas.js	/^	}$/;"	f
+Oxygen.glClear	canvas.js	/^	}$/;"	f
+Oxygen.glCreateArrayBuffer	canvas.js	/^	}$/;"	f
+Oxygen.glCreateElementBuffer	canvas.js	/^	}$/;"	f
+Oxygen.glDeleteBuffer	canvas.js	/^	}$/;"	f
+Oxygen.onStart	canvas.js	/^Oxygen.prototype.onStart    = function() {};$/;"	m
+Oxygen.onUpdate	canvas.js	/^Oxygen.prototype.onUpdate   = function() {};$/;"	m
+Oxygen.start	canvas.js	/^	Oxygen.prototype.start = function() {$/;"	m
+Oxygen.update	canvas.js	/^	Oxygen.prototype.update = function( obj ) {$/;"	m
+Shape	shape.js	/^var Shape = function( x, y, z ) {$/;"	c
 Shape.colorBuffer	shape.js	/^Shape.prototype.colorBuffer       = null;$/;"	m
+Shape.config	shape.js	/^Shape.prototype.config = function() {$/;"	m
+Shape.create	shape.js	/^Shape.prototype.create = function() {$/;"	m
+Shape.destroy	shape.js	/^Shape.prototype.destroy = function() {$/;"	m
+Shape.draw	shape.js	/^Shape.prototype.draw = function() {$/;"	m
 Shape.normalBuffer	shape.js	/^Shape.prototype.normalBuffer      = null;$/;"	m
 Shape.textureBuffer	shape.js	/^Shape.prototype.textureBuffer     = null;$/;"	m
+Shape.update	shape.js	/^Shape.prototype.update = function() {$/;"	m
 Shape.vertexBuffer	shape.js	/^Shape.prototype.vertexBuffer      = null;$/;"	m
 Shape.vertexIndexBuffer	shape.js	/^Shape.prototype.vertexIndexBuffer = null;$/;"	m
 Shape.visible	shape.js	/^Shape.prototype.visible           = true;$/;"	m
-anim	index.html	/^			function anim() {$/;"	f
 compileShader	shader.js	/^function compileShader ( gl, source, type ) {$/;"	f
 createShaderProgram	shader.js	/^function createShaderProgram( gl, shaderVs, shaderFs ) {$/;"	f
 defaultShaderFsSrc	shader.js	/^var defaultShaderFsSrc =$/;"	v

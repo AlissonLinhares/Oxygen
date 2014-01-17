@@ -2,20 +2,20 @@
  * Copyright (C) 2014 Alisson L. Carvalho, Alandesson L. Carvalho.           *
  * All rights reserved.                                                      *
  *                                                                           *
- * This file is part of the Object3 lib.                                     *
+ * This file is part of the Oxygen lib.                                      *
  *                                                                           *
- * The Object3 lib is free software: you can redistribute it and/or          *
+ * The Oxygen lib is free software: you can redistribute it and/or           *
  * modify it under the terms of the GNU Lesser General Public License as     *
  * published by the Free Software Foundation, either version 3 of the        *
  * License, or (at your option) any later version.                           *
  *                                                                           *
- * The Object3 lib is distributed in the hope that it will be useful,        *
+ * The Oxygen lib is distributed in the hope that it will be useful,         *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the              *
  * GNU Lesser General Public License for more details.                       *
  *                                                                           *
  * You should have received a copy of the GNU Lesser General Public License  *
- * along with the Object3 lib. If not, see <http://www.gnu.org/licenses/>.   *
+ * along with the Oxygen lib. If not, see <http://www.gnu.org/licenses/>.    *
  *---------------------------------------------------------------------------*
  *----------------------------------------------------------------------------
  * @remarks: This file was based in glMatrix.js v0.9.5, which is a high      *
@@ -33,7 +33,7 @@
  * glMatrix lib.                                                             *
  *---------------------------------------------------------------------------*/
  
-function Object3D( x, y, z ){
+var Object3D = function( x, y, z ){
 	this._alpha = 0.0;
 	this._beta  = 0.0;
 	this._gama  = 0.0;
@@ -271,12 +271,3 @@ Object3D.prototype.setPosition = function( x, y, z ) {
 Object3D.prototype.getTransform = function() {
 	return this._transform;
 }
-
-	// var str = " ";
-	// for ( var i = 0; i < 16; i++ ) {
-	// 	// for ( var j = 0; j < 4; j++ ) {
-	// 		str += this._transform[i] + "[" + i + "]" + ", ";
-	// 	// }
-	// 	str += "\n";
-	// }
-	// alert( str );

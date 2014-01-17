@@ -2,27 +2,23 @@
  * Copyright (C) 2014 Alisson L. Carvalho, Alandesson L. Carvalho.           *
  * All rights reserved.                                                      *
  *                                                                           *
- * This file is part of the Object3 lib.                                     *
+ * This file is part of the Oxygen lib.                                      *
  *                                                                           *
- * The Object3 lib is free software: you can redistribute it and/or          *
+ * The Oxygen lib is free software: you can redistribute it and/or           *
  * modify it under the terms of the GNU Lesser General Public License as     *
  * published by the Free Software Foundation, either version 3 of the        *
  * License, or (at your option) any later version.                           *
  *                                                                           *
- * The Object3 lib is distributed in the hope that it will be useful,        *
+ * The Oxygen lib is distributed in the hope that it will be useful,         *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the              *
  * GNU Lesser General Public License for more details.                       *
  *                                                                           *
  * You should have received a copy of the GNU Lesser General Public License  *
- * along with the Object3 lib. If not, see <http://www.gnu.org/licenses/>.   *
+ * along with the Oxygen lib. If not, see <http://www.gnu.org/licenses/>.    *
  *---------------------------------------------------------------------------*/
 
-Cube.prototype = Object.create( Shape.prototype );
-
-function Cube( x, y, z ) {
-	Shape.call( this, x, y, z );
-
+var Cube = function( x, y, z ) {
 	this.vertexBuffer = new Float32Array( [
 		// Front face
 		-1.0, -1.0,  1.0,
@@ -118,6 +114,8 @@ function Cube( x, y, z ) {
 		0.0, 0.0, 1.0, 1.0,
 		0.0, 0.0, 1.0, 1.0
 	] );
+
+	Shape.call( this, x, y, z );
 }
 
-
+Cube.prototype = Object.create( Shape.prototype );

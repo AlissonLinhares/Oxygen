@@ -2,27 +2,28 @@
  * Copyright (C) 2014 Alisson L. Carvalho, Alandesson L. Carvalho.           *
  * All rights reserved.                                                      *
  *                                                                           *
- * This file is part of the Object3 lib.                                     *
+ * This file is part of the Oxygen lib.                                      *
  *                                                                           *
- * The Object3 lib is free software: you can redistribute it and/or          *
+ * The Oxygen lib is free software: you can redistribute it and/or           *
  * modify it under the terms of the GNU Lesser General Public License as     *
  * published by the Free Software Foundation, either version 3 of the        *
  * License, or (at your option) any later version.                           *
  *                                                                           *
- * The Object3 lib is distributed in the hope that it will be useful,        *
+ * The Oxygen lib is distributed in the hope that it will be useful,         *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the              *
  * GNU Lesser General Public License for more details.                       *
  *                                                                           *
  * You should have received a copy of the GNU Lesser General Public License  *
- * along with the Object3 lib. If not, see <http://www.gnu.org/licenses/>.   *
+ * along with the Oxygen lib. If not, see <http://www.gnu.org/licenses/>.    *
  *---------------------------------------------------------------------------*/
 
-function Canvas( width, height ) {
-	this._renderBuffer = [];
+function Oxygen( width, height ) {
+	var shapes  = [];
+	var cameras = [];
 
 	var canvas            = document.createElement( 'canvas' );
-	canvas.id             = "view";
+	canvas.id             = "OxygenView";
 	canvas.width          = width;
 	canvas.height         = height;
 	canvas.style.zIndex   = 1;
@@ -31,51 +32,84 @@ function Canvas( width, height ) {
 	document.body.appendChild( canvas );
 
 	try {
-		this._gl = canvas.getContext( "webgl" );
-		this._gl.width   = width;
-		this._gl.height  = height;
-		this._gl.program = createShaderProgram( this._gl );
+		var gl     = canvas.getContext( "webgl" );
+		gl.width   = width;
+		gl.height  = height;
+		gl.program = createShaderProgram( gl );
 
-		this._gl.enable( this._gl.DEPTH_TEST );
-		this._gl.viewport( 0, 0, width, height );
-
-		this.clear();
+		gl.enable( gl.DEPTH_TEST );
+		gl.viewport( 0, 0, width, height );
+		gl.clearColor( 0.0, 0.0, 0.0, 1.0 );
+		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
 	} catch(e) {
 		alert( "Error: could not initialise WebGL!" + e );
 	}
-}
 
-Canvas.prototype.clear = function( r, g, b ) {
-	this._gl.clear( this._gl.COLOR_BUFFER_BIT | this._gl.DEPTH_BUFFER_BIT );
+	Oxygen.glClear = function( r, g, b ) {
+		if ( arguments.length != 3 )
+			gl.clearColor( r, g, b, 1.0 );
+		else
+			gl.clearColor( 0.0, 0.0, 0.0, 1.0 );
 
-	if ( arguments.length != 3 )
-		this._gl.clearColor( r, g, b, 1.0 );
-	else
-		this._gl.clearColor( 0.0, 0.0, 0.0, 1.0 );
-}
+		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
+	}
 
-Canvas.prototype.update = function() {
-	this._gl.clear( this._gl.COLOR_BUFFER_BIT | this._gl.DEPTH_BUFFER_BIT );
+	Oxygen.glCreateArrayBuffer = function( buffer ) {
+		var result = gl.createBuffer();
+		gl.bindBuffer( gl.ARRAY_BUFFER, result );
+		gl.bufferData( gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW );
+		return result;
+	}
 
-	if ( this._camera )
-		this._gl.uniformMatrix4fv( this._gl.program.pMatrixUniform, false, this._camera._transform );
+	Oxygen.glCreateElementBuffer = function( buffer ) {
+		var result = gl.createBuffer();
+		gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, result );
+		gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, buffer, gl.STATIC_DRAW );
+		return result;
+	}
 
-	for( var i = 0; i < this._renderBuffer.length; i++ ) {
-		var shape = this._renderBuffer[i];
-		shape._glDraw( this._gl );
+	Oxygen.glDeleteBuffer = function( buffer ) {
+		gl.deleteBuffer( buffer );
+	}
+
+	Oxygen.getContext = function() {
+ 		return gl;
+	}
+
+	Oxygen.addCamera = function( camera ) {
+		cameras.push( camera );
+	}
+
+	Oxygen.addShape = function( shape ) {
+		shapes.push( shape );
+	}
+
+	Oxygen.prototype.update = function( obj ) {
+		this.onUpdate();
+
+		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
+
+		if ( cameras.length > 0 )
+			gl.uniformMatrix4fv( gl.program.pMatrixUniform, false, cameras[0]._transform );
+
+		for( var i = 0; i < shapes.length; i++ )
+			shapes[i].draw();
+
+		setTimeout( function() { obj.update( obj ); }, 100 );
+	}
+
+	Oxygen.prototype.start = function() {
+		this.onStart();
+		this.update( this );
 	}
 }
 
-Canvas.prototype.addCamera = function( camera ) {
-	this._camera = camera;
-}
+/******************************** Object List ********************************/
+Oxygen.prototype.Cube       = Cube;
+Oxygen.prototype.Shape      = Shape;
+Oxygen.prototype.Camera     = Camera;
+Oxygen.prototype.Object3D   = Object3D;
 
-Canvas.prototype.addShape = function( shape ) {
-	// Prepare the shape for rendering;
-	shape._glCreate( this._gl );
-	this._renderBuffer.push( shape );
-}
-
-Canvas.prototype.removeShape = function( shape ) {
-		
-}
+/********************************* Event List ********************************/
+Oxygen.prototype.onUpdate   = function() {};
+Oxygen.prototype.onStart    = function() {};
