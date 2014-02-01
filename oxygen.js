@@ -39,7 +39,7 @@ function Oxygen( width, height ) {
 
 		gl.enable( gl.DEPTH_TEST );
 		gl.viewport( 0, 0, width, height );
-		gl.clearColor( 0.0, 0.0, 0.0, 1.0 );
+		gl.clearColor( 0.2, 0.2, 0.2, 1.0 );
 		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
 	} catch(e) {
 		alert( "Error: could not initialise WebGL!" + e );
@@ -65,6 +65,20 @@ function Oxygen( width, height ) {
 		var result = gl.createBuffer();
 		gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, result );
 		gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, buffer, gl.STATIC_DRAW );
+		return result;
+	}
+
+	Oxygen.glCreateTextureBuffer = function( image, interpolation ) {
+		var result = gl.createTexture();
+
+		gl.bindTexture( gl.TEXTURE_2D, result );
+		gl.pixelStorei( gl.UNPACK_FLIP_Y_WEBGL, true );
+
+		gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image );
+		gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST );
+		gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST );
+
+		gl.bindTexture( gl.TEXTURE_2D, null );
 		return result;
 	}
 
@@ -105,12 +119,13 @@ function Oxygen( width, height ) {
 }
 
 /******************************** Object List ********************************/
+Oxygen.prototype.Object3D   = Object3D;
+Oxygen.prototype.Shape      = Shape;
 Oxygen.prototype.Cube       = Cube;
 Oxygen.prototype.Sphere     = Sphere;
-Oxygen.prototype.Pyramid    = Pyramid; 
-Oxygen.prototype.Shape      = Shape;
+Oxygen.prototype.Pyramid    = Pyramid;
 Oxygen.prototype.Camera     = Camera;
-Oxygen.prototype.Object3D   = Object3D;
+Oxygen.prototype.Texture    = Texture;
 
 /********************************* Event List ********************************/
 Oxygen.prototype.onUpdate   = function() {};

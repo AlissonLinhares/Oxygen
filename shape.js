@@ -24,12 +24,12 @@ var Shape = function( x, y, z ) {
 }
 
 Shape.prototype = Object.create( Object3D.prototype );
-
 Shape.prototype.visible           = true;
-Shape.prototype.textureBuffer     = null;
+Shape.prototype.texture           = null;
 Shape.prototype.normalBuffer      = null;
 Shape.prototype.vertexBuffer      = null;
 Shape.prototype.colorBuffer       = null;
+Shape.prototype.uvBuffer          = null;
 Shape.prototype.vertexIndexBuffer = null;
 
 Shape.prototype.create = function() {
@@ -39,26 +39,40 @@ Shape.prototype.create = function() {
 	if ( this.colorBuffer )
 		this._glColorBuffer       = Oxygen.glCreateArrayBuffer( this.colorBuffer );
 
+	if ( this.uvBuffer )
+		this._glUVBuffer          = Oxygen.glCreateArrayBuffer( this.uvBuffer );
+
 	if ( this.vertexIndexBuffer )
 		this._glVertexIndexBuffer = Oxygen.glCreateElementBuffer( this.vertexIndexBuffer );
 
 	Oxygen.addShape( this );
 }
 
-Shape.prototype.config = function() {
-	var gl = Oxygen.getContext();
-	gl.uniformMatrix4fv( gl.program.mvMatrixUniform, false, this.getTransform() );
+Shape.prototype.config = function( gl ) {
 
 	gl.bindBuffer( gl.ARRAY_BUFFER, this._glVertexBuffer );
 	gl.vertexAttribPointer( gl.program.vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0 );
 
-	// if ( this._glTextureBuffer ) {
-	// 	gl.bindBuffer( gl.ARRAY_BUFFER, this._glTextureBuffer );
-	// 	gl.vertexAttribPointer( gl.program.vertexTextureAttribute, 4, gl.FLOAT, false, 0, 0 );
-	// } if ( this._glColorBuffer ) {
+	if ( this.texture != null && this.texture.getTextureBuffer() ) {
+		gl.enableVertexAttribArray( gl.program.textureCoordAttribute );
+		gl.uniform1i( gl.program.enableTexture, true );
+
+		gl.bindBuffer( gl.ARRAY_BUFFER, this._glUVBuffer );
+		gl.vertexAttribPointer( gl.program.textureCoordAttribute, 2, gl.FLOAT, false, 0, 0 );
+
+		gl.activeTexture( gl.TEXTURE0 );
+		gl.bindTexture( gl.TEXTURE_2D, this.texture.getTextureBuffer() );
+		gl.uniform1i( gl.program.samplerUniform, 0 );
+
+	} else if ( this._glColorBuffer ) {
+		gl.disableVertexAttribArray( gl.program.textureCoordAttribute );
+		gl.uniform1i( gl.program.enableTexture, false );
+
 		gl.bindBuffer( gl.ARRAY_BUFFER, this._glColorBuffer );
 		gl.vertexAttribPointer( gl.program.vertexColorAttribute, 4, gl.FLOAT, false, 0, 0 );
-	// }
+	}
+
+	gl.uniformMatrix4fv( gl.program.mvMatrixUniform, false, this.getTransform() );
 }
 
 Shape.prototype.draw = function() {

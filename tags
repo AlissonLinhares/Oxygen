@@ -47,37 +47,71 @@ Object3D.translateY	object3d.js	/^Object3D.prototype.translateY = function( y ) 
 Object3D.translateZ	object3d.js	/^Object3D.prototype.translateZ = function( z ) {$/;"	m
 Oxygen	canvas.js	/^	}$/;"	c
 Oxygen	canvas.js	/^function Oxygen( width, height ) {$/;"	f
+Oxygen	oxygen.js	/^	}$/;"	c
+Oxygen	oxygen.js	/^function Oxygen( width, height ) {$/;"	f
 Oxygen.Camera	canvas.js	/^Oxygen.prototype.Camera     = Camera;$/;"	m
+Oxygen.Camera	oxygen.js	/^Oxygen.prototype.Camera     = Camera;$/;"	m
 Oxygen.Cube	canvas.js	/^Oxygen.prototype.Cube       = Cube;$/;"	m
+Oxygen.Cube	oxygen.js	/^Oxygen.prototype.Cube       = Cube;$/;"	m
 Oxygen.Object3D	canvas.js	/^Oxygen.prototype.Object3D   = Object3D;$/;"	m
+Oxygen.Object3D	oxygen.js	/^Oxygen.prototype.Object3D   = Object3D;$/;"	m
+Oxygen.Pyramid	oxygen.js	/^Oxygen.prototype.Pyramid    = Pyramid;$/;"	m
 Oxygen.Shape	canvas.js	/^Oxygen.prototype.Shape      = Shape;$/;"	m
+Oxygen.Shape	oxygen.js	/^Oxygen.prototype.Shape      = Shape;$/;"	m
+Oxygen.Sphere	oxygen.js	/^Oxygen.prototype.Sphere     = Sphere;$/;"	m
+Oxygen.Texture	oxygen.js	/^Oxygen.prototype.Texture    = Texture;$/;"	m
 Oxygen.addCamera	canvas.js	/^	}$/;"	f
+Oxygen.addCamera	oxygen.js	/^	}$/;"	f
 Oxygen.addShape	canvas.js	/^	}$/;"	f
+Oxygen.addShape	oxygen.js	/^	}$/;"	f
 Oxygen.getContext	canvas.js	/^	}$/;"	f
+Oxygen.getContext	oxygen.js	/^	}$/;"	f
 Oxygen.glClear	canvas.js	/^	}$/;"	f
+Oxygen.glClear	oxygen.js	/^	}$/;"	f
 Oxygen.glCreateArrayBuffer	canvas.js	/^	}$/;"	f
+Oxygen.glCreateArrayBuffer	oxygen.js	/^	}$/;"	f
 Oxygen.glCreateElementBuffer	canvas.js	/^	}$/;"	f
+Oxygen.glCreateElementBuffer	oxygen.js	/^	}$/;"	f
+Oxygen.glCreateTextureBuffer	oxygen.js	/^	}$/;"	f
 Oxygen.glDeleteBuffer	canvas.js	/^	}$/;"	f
+Oxygen.glDeleteBuffer	oxygen.js	/^	}$/;"	f
 Oxygen.onStart	canvas.js	/^Oxygen.prototype.onStart    = function() {};$/;"	m
+Oxygen.onStart	oxygen.js	/^Oxygen.prototype.onStart    = function() {};$/;"	m
 Oxygen.onUpdate	canvas.js	/^Oxygen.prototype.onUpdate   = function() {};$/;"	m
+Oxygen.onUpdate	oxygen.js	/^Oxygen.prototype.onUpdate   = function() {};$/;"	m
 Oxygen.start	canvas.js	/^	Oxygen.prototype.start = function() {$/;"	m
+Oxygen.start	oxygen.js	/^	Oxygen.prototype.start = function() {$/;"	m
 Oxygen.update	canvas.js	/^	Oxygen.prototype.update = function( obj ) {$/;"	m
+Oxygen.update	oxygen.js	/^	Oxygen.prototype.update = function( obj ) {$/;"	m
 Shape	shape.js	/^var Shape = function( x, y, z ) {$/;"	c
 Shape.colorBuffer	shape.js	/^Shape.prototype.colorBuffer       = null;$/;"	m
-Shape.config	shape.js	/^Shape.prototype.config = function() {$/;"	m
+Shape.config	shape.js	/^Shape.prototype.config = function( gl ) {$/;"	m
 Shape.create	shape.js	/^Shape.prototype.create = function() {$/;"	m
 Shape.destroy	shape.js	/^Shape.prototype.destroy = function() {$/;"	m
 Shape.draw	shape.js	/^Shape.prototype.draw = function() {$/;"	m
 Shape.normalBuffer	shape.js	/^Shape.prototype.normalBuffer      = null;$/;"	m
-Shape.textureBuffer	shape.js	/^Shape.prototype.textureBuffer     = null;$/;"	m
+Shape.texture	shape.js	/^Shape.prototype.texture           = null;$/;"	m
 Shape.update	shape.js	/^Shape.prototype.update = function() {$/;"	m
+Shape.uvBuffer	shape.js	/^Shape.prototype.uvBuffer          = null;$/;"	m
 Shape.vertexBuffer	shape.js	/^Shape.prototype.vertexBuffer      = null;$/;"	m
 Shape.vertexIndexBuffer	shape.js	/^Shape.prototype.vertexIndexBuffer = null;$/;"	m
 Shape.visible	shape.js	/^Shape.prototype.visible           = true;$/;"	m
+Sphere	sphere.js	/^function Sphere( x, y, z, radius ) {$/;"	c
+Sphere._calcBufferData	sphere.js	/^Sphere.prototype._calcBufferData = function(latitude, longitude, radius){$/;"	m
+Sphere.getLatitude	sphere.js	/^Sphere.prototype.getLatitude = function(){$/;"	m
+Sphere.getLongitude	sphere.js	/^Sphere.prototype.getLongitude = function(){$/;"	m
+Sphere.getRadius	sphere.js	/^Sphere.prototype.getRadius = function(){$/;"	m
+Sphere.setLatitude	sphere.js	/^Sphere.prototype.setLatitude = function(latitude){$/;"	m
+Sphere.setLongitude	sphere.js	/^Sphere.prototype.setLongitude = function(longitude){$/;"	m
+Sphere.setRadius	sphere.js	/^Sphere.prototype.setRadius = function(radius){$/;"	m
+Texture	texture.js	/^	image.src = src;$/;"	c
+Texture	texture.js	/^var Texture = function( src ) {$/;"	f
+Texture.getTextureBuffer	texture.js	/^	Texture.prototype.getTextureBuffer = function() {$/;"	m
 compileShader	shader.js	/^function compileShader ( gl, source, type ) {$/;"	f
 createShaderProgram	shader.js	/^function createShaderProgram( gl, shaderVs, shaderFs ) {$/;"	f
 defaultShaderFsSrc	shader.js	/^var defaultShaderFsSrc =$/;"	v
 defaultShaderVsSrc	shader.js	/^var defaultShaderVsSrc =$/;"	v
+image.onload	texture.js	/^	var textureBuffer = null;$/;"	f
 mat3.identity	glMatrix-0.9.5.min.js	/^mat3.create=function(a){var b=new glMatrixArrayType(9);if(a){b[0]=a[0];b[1]=a[1];b[2]=a[2];b[3]=a[3];b[4]=a[4];b[5]=a[5];b[6]=a[6];b[7]=a[7];b[8]=a[8];b[9]=a[9]}return b};mat3.set=function(a,b){b[0]=a[0];b[1]=a[1];b[2]=a[2];b[3]=a[3];b[4]=a[4];b[5]=a[5];b[6]=a[6];b[7]=a[7];b[8]=a[8];return b};mat3.identity=function(a){a[0]=1;a[1]=0;a[2]=0;a[3]=0;a[4]=1;a[5]=0;a[6]=0;a[7]=0;a[8]=1;return a};$/;"	f
 mat3.set	glMatrix-0.9.5.min.js	/^mat3.create=function(a){var b=new glMatrixArrayType(9);if(a){b[0]=a[0];b[1]=a[1];b[2]=a[2];b[3]=a[3];b[4]=a[4];b[5]=a[5];b[6]=a[6];b[7]=a[7];b[8]=a[8];b[9]=a[9]}return b};mat3.set=function(a,b){b[0]=a[0];b[1]=a[1];b[2]=a[2];b[3]=a[3];b[4]=a[4];b[5]=a[5];b[6]=a[6];b[7]=a[7];b[8]=a[8];return b};mat3.identity=function(a){a[0]=1;a[1]=0;a[2]=0;a[3]=0;a[4]=1;a[5]=0;a[6]=0;a[7]=0;a[8]=1;return a};$/;"	f
 mat3.str	glMatrix-0.9.5.min.js	/^mat3.transpose=function(a,b){if(!b||a==b){var c=a[1],d=a[2],e=a[5];a[1]=a[3];a[2]=a[6];a[3]=c;a[5]=a[7];a[6]=d;a[7]=e;return a}b[0]=a[0];b[1]=a[3];b[2]=a[6];b[3]=a[1];b[4]=a[4];b[5]=a[7];b[6]=a[2];b[7]=a[5];b[8]=a[8];return b};mat3.toMat4=function(a,b){b||(b=mat4.create());b[0]=a[0];b[1]=a[1];b[2]=a[2];b[3]=0;b[4]=a[3];b[5]=a[4];b[6]=a[5];b[7]=0;b[8]=a[6];b[9]=a[7];b[10]=a[8];b[11]=0;b[12]=0;b[13]=0;b[14]=0;b[15]=1;return b};$/;"	f

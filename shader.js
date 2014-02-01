@@ -19,23 +19,37 @@
  *---------------------------------------------------------------------------*/
 
 var defaultShaderVsSrc =
+"attribute vec2 aTextureCoord;" +
 "attribute vec3 aVertexPosition;" +
 "attribute vec4 aVertexColor;" +
+
 "uniform mat4 uMVMatrix;" +
 "uniform mat4 uPMatrix;" +
+
+"varying vec2 vTextureCoord;" +
 "varying vec4 vColor;" +
 
 "void main() {" +
-"	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);" +
+"	gl_Position = uPMatrix * uMVMatrix * vec4( aVertexPosition, 1.0 );" +
 "	vColor = aVertexColor;" +
+"	vTextureCoord = aTextureCoord;" +
 "}";
 
 var defaultShaderFsSrc =
 "precision mediump float;" +
+
 "varying vec4 vColor;" +
+"varying vec2 vTextureCoord;" +
+
+"uniform sampler2D uSampler;" +
+"uniform bool enableTexture;" +
 
 "void main() {" +
-	"gl_FragColor = vColor;" +
+"	if ( enableTexture ) {" +
+"		gl_FragColor = texture2D( uSampler, vec2( vTextureCoord.s, vTextureCoord.t ) );" +
+"	} else {" +
+"		gl_FragColor = vColor;" +
+"	}" +
 "}";
 
 
@@ -73,8 +87,14 @@ function createShaderProgram( gl, shaderVs, shaderFs ) {
 	program.vertexColorAttribute = gl.getAttribLocation( program, "aVertexColor" );
 	gl.enableVertexAttribArray( program.vertexColorAttribute );
 
+	program.textureCoordAttribute = gl.getAttribLocation( program, "aTextureCoord" );
+	gl.enableVertexAttribArray( program.textureCoordAttribute );
+
+	program.enableTexture = gl.getUniformLocation( program, "enableTexture" );
+
 	program.pMatrixUniform = gl.getUniformLocation( program, "uPMatrix" );
 	program.mvMatrixUniform = gl.getUniformLocation( program, "uMVMatrix" );
+	program.samplerUniform = gl.getUniformLocation( program, "uSampler");
 
 	return program;
 }
