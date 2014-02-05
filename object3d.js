@@ -42,6 +42,11 @@ var Object3D = function( x, y, z ){
 	this._scaleY = 1.0;
 	this._scaleZ = 1.0;
 
+	this._parent    = null;
+	this._children  = {};
+	this._nChildren = 0;
+	this._id        = Object3D._numberOfObject++;
+
 	// Create a transform matrix;
 	this._transform = new Float32Array( 16 );
 
@@ -50,6 +55,35 @@ var Object3D = function( x, y, z ){
 
 	if ( arguments.length == 3 )
 		this.translate( x, y, z );
+}
+
+Object3D._numberOfObject = 0;
+
+Object3D.prototype.remove = function( child ) {
+	if ( child._parent == this ) {
+		delete this._children[child._id];
+		this._nChildren--;
+		child._parent = null;
+	}
+}
+
+Object3D.prototype.add = function( child ) {
+	// More than one parent per child is not allowed!
+	if ( child._parent )
+		child._parent.remove( child );
+
+	child._parent = this;
+	this._children[child._id] = child;
+	this._nChildren++;
+}
+
+Object3D.prototype.getTransform = function() {
+	if ( this._parent ) {
+		var transform = [];
+		return mat4.multiply( this._parent.getTransform(), this._transform, transform );
+	}
+
+	return this._transform;
 }
 
 /**
@@ -266,8 +300,4 @@ Object3D.prototype.setPosition = function( x, y, z ) {
 	this._transform[12] = x;
 	this._transform[13] = y;
 	this._transform[14] = z;
-}
-
-Object3D.prototype.getTransform = function() {
-	return this._transform;
 }

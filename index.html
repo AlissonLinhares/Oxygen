@@ -19,19 +19,70 @@
 	<body>
 		<script type="text/javascript">
 			var o2 = new Oxygen( 800, 600 );
-			var cube = new o2.Cube( -4, 0, -9 );
-			var pyramid = new o2.Pyramid( 0, 0, -9 );
-			var sphere = new o2.Sphere( 4, 0, -9 , 1.5);
-			var camera = new o2.Camera( 0, 0, 0 );
-			cube.texture = new o2.Texture( "img.jpg" );
+			var player = new o2.Object3D( 0, 0,-9 );
+			var head = new o2.Cube( 0.0,   2.7, 0 );
+			var lArm = new o2.Cube( 0.0, -19.0, 0 );
+			var rArm = new o2.Cube( 0.0, -19.0, 0 );
+			var lLeg = new o2.Cube( 0.0, -19.0, 0 );
+			var rLeg = new o2.Cube( 0.0, -19.0, 0 );
+			var body = new o2.Cube( 0.0,     0, 0 );
 
+			var jointLArm = new o2.Cube(-1.4, 2, 0 );
+			var jointRArm = new o2.Cube( 1.4, 2, 0 );
+			var jointLLeg = new o2.Cube(-0.6,-2, 0 );
+			var jointRLeg = new o2.Cube( 0.6,-2, 0 );
+			var camera = new o2.Camera( 0, 0, -10 );
+
+			head.texture = new o2.Texture( "img.jpg" );
+			lLeg.texture = new o2.Texture( "img.jpg" );
+			rLeg.texture = new o2.Texture( "img.jpg" );
+			lArm.texture = new o2.Texture( "img.jpg" );
+			rArm.texture = new o2.Texture( "img.jpg" );
+			body.texture = new o2.Texture( "img.jpg" );
+
+			head.setScale( 0.6, 0.6,  0.6 );
+			lLeg.setScale( 5, 20, 5 );
+			rLeg.setScale( 5, 20, 5 );
+			lArm.setScale( 3, 17, 3 );
+			rArm.setScale( 3, 17, 3 );
+			body.scaleY(2);
+
+			jointLArm.setScale( 0.1, 0.1, 0.1 );
+			jointRArm.setScale( 0.1, 0.1, 0.1 );
+			jointLLeg.setScale( 0.1, 0.1, 0.1 );
+			jointRLeg.setScale( 0.1, 0.1, 0.1 );
+
+			jointLArm.add( lArm );
+			jointRArm.add( rArm );
+			jointLLeg.add( lLeg );
+			jointRLeg.add( rLeg );
+
+			player.add( body );
+			player.add( jointLLeg );
+			player.add( jointRLeg );
+			player.add( jointLArm );
+			player.add( jointRArm );
+			player.add( head );
+
+			jointLArm.rotateX( 0.4 );
+			jointRArm.rotateX( -0.4 );
+			jointRLeg.rotateX( 0.4 );
+			jointLLeg.rotateX( -0.4 );
+
+			var x = -0.1;
+			var cont = 0;
 			o2.onUpdate = function() {
-				cube.rotateY( 0.1 );
-				cube.rotateX( 0.1 );
-				pyramid.rotateY( 0.1 );
-				pyramid.rotateX( 0.1 );
-				sphere.rotateY( 0.1 );
-				sphere.rotateX( 0.1 );
+				player.rotateY(0.1);
+
+				if( cont++ > 10 ) {
+					x *= -1;
+					cont = 0;
+				}
+
+				jointLArm.rotateX( x );
+				jointRArm.rotateX( -x );
+				jointRLeg.rotateX( x );
+				jointLLeg.rotateX( -x );
 			}
 
 			o2.start();
