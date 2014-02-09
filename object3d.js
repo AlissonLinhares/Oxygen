@@ -161,7 +161,17 @@ Object3D.prototype.rotateZ = function( gama ) {
 }
 
 Object3D.prototype.lookAt = function( object3d ) {
+	var x  = object3d.getX() - this.getX();
+	var y  = object3d.getY() - this.getY();
+	var z  = object3d.getZ() - this.getZ();
 
+	var d1 = Math.sqrt( Math.pow( x, 2 ) + Math.pow( y, 2 ) );
+	var d2 = Math.sqrt( Math.pow( x, 2 ) + Math.pow( z, 2 ) );
+
+	x = x / d2;
+	y = y / d1;
+
+	this.setRotation( 0, -Math.acos(x), Math.acos(y) );
 }
 
 Object3D.prototype.setRotation = function( alpha, beta, gama ) {

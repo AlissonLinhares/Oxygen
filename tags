@@ -106,14 +106,13 @@ Sphere.getRadius	sphere.js	/^Sphere.prototype.getRadius = function(){$/;"	m
 Sphere.setLatitude	sphere.js	/^Sphere.prototype.setLatitude = function(latitude){$/;"	m
 Sphere.setLongitude	sphere.js	/^Sphere.prototype.setLongitude = function(longitude){$/;"	m
 Sphere.setRadius	sphere.js	/^Sphere.prototype.setRadius = function(radius){$/;"	m
-Texture	texture.js	/^	image.src = src;$/;"	c
-Texture	texture.js	/^var Texture = function( src ) {$/;"	f
-Texture.getTextureBuffer	texture.js	/^	Texture.prototype.getTextureBuffer = function() {$/;"	m
+Texture	texture.js	/^var Texture = function( src, definition ) {$/;"	c
+Texture.getTextureBuffer	texture.js	/^Texture.prototype.getTextureBuffer = function() {$/;"	m
+Texture.image	texture.js	/^	this.image.onload = function() {$/;"	m
 compileShader	shader.js	/^function compileShader ( gl, source, type ) {$/;"	f
 createShaderProgram	shader.js	/^function createShaderProgram( gl, shaderVs, shaderFs ) {$/;"	f
 defaultShaderFsSrc	shader.js	/^var defaultShaderFsSrc =$/;"	v
 defaultShaderVsSrc	shader.js	/^var defaultShaderVsSrc =$/;"	v
-image.onload	texture.js	/^	var textureBuffer = null;$/;"	f
 mat3.identity	glMatrix-0.9.5.min.js	/^mat3.create=function(a){var b=new glMatrixArrayType(9);if(a){b[0]=a[0];b[1]=a[1];b[2]=a[2];b[3]=a[3];b[4]=a[4];b[5]=a[5];b[6]=a[6];b[7]=a[7];b[8]=a[8];b[9]=a[9]}return b};mat3.set=function(a,b){b[0]=a[0];b[1]=a[1];b[2]=a[2];b[3]=a[3];b[4]=a[4];b[5]=a[5];b[6]=a[6];b[7]=a[7];b[8]=a[8];return b};mat3.identity=function(a){a[0]=1;a[1]=0;a[2]=0;a[3]=0;a[4]=1;a[5]=0;a[6]=0;a[7]=0;a[8]=1;return a};$/;"	f
 mat3.set	glMatrix-0.9.5.min.js	/^mat3.create=function(a){var b=new glMatrixArrayType(9);if(a){b[0]=a[0];b[1]=a[1];b[2]=a[2];b[3]=a[3];b[4]=a[4];b[5]=a[5];b[6]=a[6];b[7]=a[7];b[8]=a[8];b[9]=a[9]}return b};mat3.set=function(a,b){b[0]=a[0];b[1]=a[1];b[2]=a[2];b[3]=a[3];b[4]=a[4];b[5]=a[5];b[6]=a[6];b[7]=a[7];b[8]=a[8];return b};mat3.identity=function(a){a[0]=1;a[1]=0;a[2]=0;a[3]=0;a[4]=1;a[5]=0;a[6]=0;a[7]=0;a[8]=1;return a};$/;"	f
 mat3.str	glMatrix-0.9.5.min.js	/^mat3.transpose=function(a,b){if(!b||a==b){var c=a[1],d=a[2],e=a[5];a[1]=a[3];a[2]=a[6];a[3]=c;a[5]=a[7];a[6]=d;a[7]=e;return a}b[0]=a[0];b[1]=a[3];b[2]=a[6];b[3]=a[1];b[4]=a[4];b[5]=a[7];b[6]=a[2];b[7]=a[5];b[8]=a[8];return b};mat3.toMat4=function(a,b){b||(b=mat4.create());b[0]=a[0];b[1]=a[1];b[2]=a[2];b[3]=0;b[4]=a[3];b[5]=a[4];b[6]=a[5];b[7]=0;b[8]=a[6];b[9]=a[7];b[10]=a[8];b[11]=0;b[12]=0;b[13]=0;b[14]=0;b[15]=1;return b};$/;"	f

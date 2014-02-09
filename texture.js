@@ -1,15 +1,18 @@
-var Texture = function( src ) {
-	var image = new Image();
-	var textureBuffer = null;
+var Texture = function( src, definition ) {
+	this.image = new Image();
+	this.image.buffer = null;
 
-	image.onload = function() {
-		textureBuffer = Oxygen.glCreateTextureBuffer( image, 0 );
+	this.image.onload = function() {
+		this.buffer = Oxygen.glCreateTextureBuffer( this, definition );
 	}
 
-	image.src = src;
-
-	Texture.prototype.getTextureBuffer = function() {
-		return textureBuffer;
-	}
+	this.image.src = src;
 }
 
+Texture.prototype.getTextureBuffer = function() {
+	return this.image.buffer;
+}
+
+Texture.HIGH_DEFINITION   = 2;
+Texture.MEDIUM_DEFINITION = 1;
+Texture.LOW_DEFINITION    = 0;
