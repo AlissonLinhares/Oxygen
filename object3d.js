@@ -160,8 +160,37 @@ Object3D.prototype.rotateZ = function( gama ) {
 	this._transform[7] = a03 * -s + a13 * c;
 }
 
-Object3D.prototype.lookAt = function( object3d ) {
-
+ Object3D.prototype.lookAt = function( object3d ) {
+  	
+	var x  = this.getX() - object3d.getX();
+  	var y  = this.getY() - object3d.getY();
+  	var z  = this.getZ() - object3d.getZ();
+	
+	if( x == 0.0 && y == 0.0 && z == 0.0 )
+		return;
+	
+ 	var distance = Math.sqrt( x*x + y*y + z*z );
+	
+	x = x/distance;
+	y = y/distance;
+	z = z/distance;
+	
+	this._transform[0 ] = z * this.getScaleX();
+	this._transform[1 ] = 0.0;
+	this._transform[2 ] = -x * this.getScaleX();
+	this._transform[3 ] = 0.0;
+	
+	this._transform[4 ] = -x * y * this.getScaleY();
+	this._transform[5 ] = (z * z + x * x) * this.getScaleY();
+	this._transform[6 ] = -y * z * this.getScaleY();
+	this._transform[7 ] = 0.0;
+	
+	this._transform[8 ] = x * this.getScaleZ();
+	this._transform[9 ] = y * this.getScaleZ();
+	this._transform[10] = z * this.getScaleZ();
+	this._transform[11] = 0.0;
+	
+	this._transform[15] = 1.0;
 }
 
 Object3D.prototype.setRotation = function( alpha, beta, gama ) {
