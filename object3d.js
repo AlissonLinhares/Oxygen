@@ -160,7 +160,7 @@ Object3D.prototype.rotateZ = function( gama ) {
 	this._transform[7] = a03 * -s + a13 * c;
 }
 
- Object3D.prototype.lookAt = function( object3d ) {
+Object3D.prototype.lookAt = function( object3d ) {
   	
 	var x  = this.getX() - object3d.getX();
   	var y  = this.getY() - object3d.getY();

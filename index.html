@@ -31,21 +31,21 @@
 			var jointRArm = new o2.Cube( 1.4, 2, 0 );
 			var jointLLeg = new o2.Cube(-0.6,-2, 0 );
 			var jointRLeg = new o2.Cube( 0.6,-2, 0 );
-			var camera = new o2.Camera( 0, 0, -10 );
+			var camera = new o2.Camera( 0, 0, -20 );
 
-			head.texture = new o2.Texture( "img.jpg" );
-			lLeg.texture = new o2.Texture( "img.jpg" );
-			rLeg.texture = new o2.Texture( "img.jpg" );
-			lArm.texture = new o2.Texture( "img.jpg" );
-			rArm.texture = new o2.Texture( "img.jpg" );
-			body.texture = new o2.Texture( "img.jpg" );
+			head.texture = new o2.Texture( "head.jpg", Texture.HIGH_DEFINITION );
+			lLeg.texture = new o2.Texture( "leg.jpg" , Texture.LOW_DEFINITION );
+			rLeg.texture = new o2.Texture( "leg.jpg" , Texture.MEDIUM_DEFINITION );
+			lArm.texture = new o2.Texture( "arm.jpg" , Texture.HIGH_DEFINITION );
+			rArm.texture = new o2.Texture( "arm.jpg" , Texture.LOW_DEFINITION );
+			body.texture = new o2.Texture( "body.jpg" , Texture.MEDIUM_DEFINITION );
 
 			head.setScale( 0.6, 0.6,  0.6 );
 			lLeg.setScale( 5, 20, 5 );
 			rLeg.setScale( 5, 20, 5 );
 			lArm.setScale( 3, 17, 3 );
 			rArm.setScale( 3, 17, 3 );
-			body.scaleY(2);
+			body.setScale( 1,  2, 0.6);
 
 			jointLArm.setScale( 0.1, 0.1, 0.1 );
 			jointRArm.setScale( 0.1, 0.1, 0.1 );
@@ -68,6 +68,7 @@
 			jointRArm.rotateX( -0.4 );
 			jointRLeg.rotateX( 0.4 );
 			jointLLeg.rotateX( -0.4 );
+
 
 			var x = -0.1;
 			var cont = 0;
