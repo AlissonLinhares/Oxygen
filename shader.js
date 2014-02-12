@@ -24,13 +24,14 @@ var defaultShaderVsSrc =
 "attribute vec4 aVertexColor;" +
 
 "uniform mat4 uMVMatrix;" +
+"uniform mat4 uVMatrix;" +
 "uniform mat4 uPMatrix;" +
 
 "varying vec2 vTextureCoord;" +
 "varying vec4 vColor;" +
 
 "void main() {" +
-"	gl_Position = uPMatrix * uMVMatrix * vec4( aVertexPosition, 1.0 );" +
+"	gl_Position = uPMatrix * ( uVMatrix * uMVMatrix ) * vec4( aVertexPosition, 1.0 );" +
 "	vColor = aVertexColor;" +
 "	vTextureCoord = aTextureCoord;" +
 "}";
@@ -93,6 +94,7 @@ function createShaderProgram( gl, shaderVs, shaderFs ) {
 	program.enableTexture = gl.getUniformLocation( program, "enableTexture" );
 
 	program.pMatrixUniform = gl.getUniformLocation( program, "uPMatrix" );
+	program.vMatrixUniform = gl.getUniformLocation( program, "uVMatrix" );
 	program.mvMatrixUniform = gl.getUniformLocation( program, "uMVMatrix" );
 	program.samplerUniform = gl.getUniformLocation( program, "uSampler");
 

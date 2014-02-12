@@ -125,8 +125,10 @@ function Oxygen( width, height ) {
 
 		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
 
-		if ( cameras.length > 0 )
-			gl.uniformMatrix4fv( gl.program.pMatrixUniform, false, cameras[0]._transform );
+		if ( cameras.length > 0 ) {
+			gl.uniformMatrix4fv( gl.program.vMatrixUniform, false, mat4.inverse( cameras[0].getTransform() ) );
+			gl.uniformMatrix4fv( gl.program.pMatrixUniform, false, cameras[0].getProjectionMatrix() );
+		}
 
 		for( var i = 0; i < shapes.length; i++ )
 			shapes[i].draw();

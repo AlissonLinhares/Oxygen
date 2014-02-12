@@ -4,19 +4,20 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-Camera	camera.js	/^var Camera = function( x, y, z ) {$/;"	f
-Camera	camera.js	/^}$/;"	c
+Camera	camera.js	/^var Camera = function( x, y, z ) {$/;"	c
+Camera.Object3D	camera.js	/^Camera.prototype.reset = function() {$/;"	c
 Camera._aspectRation	camera.js	/^Camera.prototype._aspectRation = 4\/3;$/;"	m
 Camera._farClip	camera.js	/^Camera.prototype._farClip      = 100.0;$/;"	m
 Camera._fildOfView	camera.js	/^Camera.prototype._fildOfView   = 45;$/;"	m
 Camera._nearClip	camera.js	/^Camera.prototype._nearClip     = 0.1;$/;"	m
+Camera.getProjectionMatrix	camera.js	/^Camera.prototype.getProjectionMatrix = function() {$/;"	m
 Camera.reset	camera.js	/^Camera.prototype.reset = function() {$/;"	m
 Camera.setAspectRation	camera.js	/^Camera.prototype.setAspectRation = function( aspectRation ) {$/;"	m
 Camera.setFarClip	camera.js	/^Camera.prototype.setFarClip = function( farClip ) {$/;"	m
 Camera.setFildOfView	camera.js	/^Camera.prototype.setFildOfView = function( fildOfView ) {$/;"	m
 Camera.setNearClip	camera.js	/^Camera.prototype.setNearClip = function( nearClip ) {$/;"	m
-Camera.setPosition	camera.js	/^Camera.prototype.setPosition = function( x, y, z ) {$/;"	m
-Camera.setZ	camera.js	/^Camera.prototype.setZ = function( z ) {$/;"	m
+Camera.setViewPosition	camera.js	/^Camera.prototype.setViewPosition = function( x, y ) {$/;"	m
+Camera.setZoom	camera.js	/^Camera.prototype.setZoom = function( z ) {$/;"	m
 Cube	cube.js	/^var Cube = function( x, y, z ) {$/;"	c
 Object3D	object3d.js	/^var Object3D = function( x, y, z ){$/;"	c
 Object3D.add	object3d.js	/^Object3D.prototype.add = function( child ) {$/;"	m

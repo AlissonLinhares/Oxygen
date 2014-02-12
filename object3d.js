@@ -54,7 +54,7 @@ var Object3D = function( x, y, z ){
 	this.reset();
 
 	if ( arguments.length == 3 )
-		this.translate( x, y, z );
+		this.setPosition( x, y, z );
 }
 
 Object3D._numberOfObject = 0;
@@ -87,7 +87,7 @@ Object3D.prototype.getTransform = function() {
 }
 
 /**
- * @remarks This function was based in roateX from glMatrix.js. We didn't use
+ * @remarks This function was based in rotateX from glMatrix.js. We didn't use
  * the original version, because we believe that it would be easier to changes
  * this source file in the future.
  */
@@ -111,7 +111,7 @@ Object3D.prototype.rotateX = function( alpha ) {
 }
 
 /**
- * @remarks This function was based in roateY from glMatrix.js. We didn't use
+ * @remarks This function was based in rotateY from glMatrix.js. We didn't use
  * the original version, because we believe that it would be easier to changes
  * this source file in the future.
  */
@@ -136,7 +136,7 @@ Object3D.prototype.rotateY = function( beta ) {
 }
 
 /**
- * @remarks This function was based in roateZ from glMatrix.js. We didn't use
+ * @remarks This function was based in rotateZ from glMatrix.js. We didn't use
  * the original version, because we believe that it would be easier to changes
  * this source file in the future.
  */
