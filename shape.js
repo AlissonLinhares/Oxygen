@@ -90,10 +90,6 @@ Shape.prototype.draw = function() {
 	}
 }
 
-Shape.prototype.update = function() {
-
-}
-
 Shape.prototype.destroy = function() {
 	Oxygen.glDeleteBuffer( this._glVertexBuffer );
 	Oxygen.glDeleteBuffer( this._glVertexBuffer );

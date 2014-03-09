@@ -125,10 +125,8 @@ function Oxygen( width, height ) {
 
 		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
 
-		if ( cameras.length > 0 ) {
-			gl.uniformMatrix4fv( gl.program.vMatrixUniform, false, mat4.inverse( cameras[0].getTransform() ) );
-			gl.uniformMatrix4fv( gl.program.pMatrixUniform, false, cameras[0].getProjectionMatrix() );
-		}
+		if ( cameras.length > 0 )
+			cameras[0].update();
 
 		for( var i = 0; i < shapes.length; i++ )
 			shapes[i].draw();
@@ -150,7 +148,11 @@ Oxygen.prototype.Sphere     = Sphere;
 Oxygen.prototype.Pyramid    = Pyramid;
 Oxygen.prototype.Camera     = Camera;
 Oxygen.prototype.Texture    = Texture;
+Oxygen.prototype.Keyboard   = Keyboard;
+// Oxygen.prototype.FPSCamera  = FPSCamera;
 
 /********************************* Event List ********************************/
 Oxygen.prototype.onUpdate   = function() {};
 Oxygen.prototype.onStart    = function() {};
+Oxygen.prototype.onKeyDown  = function() {};
+Oxygen.prototype.onKeyUp    = function() {};

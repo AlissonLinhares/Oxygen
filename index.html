@@ -13,6 +13,8 @@
 		<script type="text/javascript" src="pyramid.js"></script>
 		<script type="text/javascript" src="sphere.js"></script>
 		<script type="text/javascript" src="texture.js"></script>
+		<script type="text/javascript" src="keyboard.js"></script>
+		<!-- <script type="text/javascript" src="fpscamera.js"></script> -->
 		<script type="text/javascript" src="oxygen.js"></script>
 	</head>
 
@@ -40,9 +42,8 @@
 			var jointRArm = new o2.Cube( 1.4, 2, 0 );
 			var jointLLeg = new o2.Cube(-0.6,-2, 0 );
 			var jointRLeg = new o2.Cube( 0.6,-2, 0 );
-			var camera = new o2.Camera( 0, 0, 0 );
-			var cam = new o2.Object3D( 0, 0, 20 );
-			cam.add(camera);
+			// var camera = new o2.FPSCamera( 0, 0, 20 );
+			var camera = new o2.Camera( 0, 0, 20 );
 
 			head.texture = new o2.Texture( "head.jpg", Texture.HIGH_DEFINITION );
 			lLeg.texture = new o2.Texture( "leg.jpg" , Texture.LOW_DEFINITION );
@@ -83,41 +84,12 @@
 			var x = -0.1;
 			var cont = 0;
 
-			var keyMap = {};
-
-			document.onkeydown = function( event ) {
-				keyMap[event.keyCode] = true;
-			}
-
-			document.onkeyup = function( event ) {
-				keyMap[event.keyCode] = false;
-			}
-
 			o2.onUpdate = function() {
 				player.rotateY(0.1);
-			
-				if ( keyMap[37] ) {
-					cam.rotateY( 0.1 );
-				} else if ( keyMap[39] ) {
-					cam.rotateY( -0.1 );
-				}
 
-				if ( keyMap[38] ) {
-					camera.rotateX( 0.1 );
-				} else if( keyMap[40] ) {
-					camera.rotateX( -0.1 );
-				}
-
-				if ( keyMap[65] ) {
-					cam.translateX(-0.3);
-				} else if ( keyMap[68] ) {
-					cam.translateX( 0.3 );
-				}
-
-				if ( keyMap[87] ) {
-					cam.translateZ(-0.3);
-				} else if ( keyMap[83] ) {
-					cam.translateZ(0.3);
+				if ( ++cont > 10 ) {
+					cont = 0;
+					x *= -1;
 				}
 
 				jointLArm.rotateX( x );
@@ -125,17 +97,15 @@
 				jointRLeg.rotateX( x );
 				jointLLeg.rotateX( -x );
 
-			document.getElementById('posX').value  = camera.getX();
-			document.getElementById('posY').value  = camera.getY();
-			document.getElementById('posZ').value  = camera.getZ();
-			document.getElementById('alpha').value = camera._alpha;
-			document.getElementById('beta').value  = camera._beta;
-			document.getElementById('gama').value  = camera._gama;
+				document.getElementById('posX').value  = camera.getX();
+				document.getElementById('posY').value  = camera.getY();
+				document.getElementById('posZ').value  = camera.getZ();
+				document.getElementById('alpha').value = camera._alpha;
+				document.getElementById('beta').value  = camera._beta;
+				document.getElementById('gama').value  = camera._gama;
 			}
-
 
 			o2.start();
 		</script>
-
 </body>
 </html>

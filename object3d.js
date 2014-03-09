@@ -32,7 +32,7 @@
  * @remarks: Special thanks to Brandon Jones for his excellent work on       *
  * glMatrix lib.                                                             *
  *---------------------------------------------------------------------------*/
- 
+
 var Object3D = function( x, y, z ){
 	this._alpha = 0.0;
 	this._beta  = 0.0;
@@ -41,6 +41,10 @@ var Object3D = function( x, y, z ){
 	this._scaleX = 1.0;
 	this._scaleY = 1.0;
 	this._scaleZ = 1.0;
+
+	this._centerX = 0.0;
+	this._centerY = 0.0;
+	this._centerZ = 0.0;
 
 	this._parent    = null;
 	this._children  = {};
@@ -77,119 +81,139 @@ Object3D.prototype.add = function( child ) {
 	this._nChildren++;
 }
 
+Object3D.prototype._calcTransf = function ( a, b ) {
+	var transform = [];
+
+	var a00 = a[0], a01 = a[1], a02 = a[2], a10 = a[4],
+		a11 = a[5], a12 = a[6], a13 = a[7], a20 = a[8],
+		a21 = a[9], a22 = a[10];
+
+	// Cache only the current line of the second matrix
+	var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
+	transform[0] = b0*a00 + b1*a10 + b2*a20;
+	transform[1] = b0*a01 + b1*a11 + b2*a21;
+	transform[2] = b0*a02 + b1*a12 + b2*a22;
+	transform[3] = 0;
+
+	b0 = b[4]; b1 = b[5]; b2 = b[6];
+	transform[4] = b0*a00 + b1*a10 + b2*a20;
+	transform[5] = b0*a01 + b1*a11 + b2*a21;
+	transform[6] = b0*a02 + b1*a12 + b2*a22;
+	transform[7] = 0;
+
+	b0 = b[8]; b1 = b[9]; b2 = b[10];
+	transform[8] = b0*a00 + b1*a10 + b2*a20;
+	transform[9] = b0*a01 + b1*a11 + b2*a21;
+	transform[10] = b0*a02 + b1*a12 + b2*a22;
+	transform[11] = 0;
+
+	b0 = b[12]; b1 = b[13]; b2 = b[14];
+	transform[12] = b0*a00 + b1*a10 + b2*a20 + a[12];
+	transform[13] = b0*a01 + b1*a11 + b2*a21 + a[13];
+	transform[14] = b0*a02 + b1*a12 + b2*a22 + a[14];
+	transform[15] = 1;
+	return transform;
+};
+
 Object3D.prototype.getTransform = function() {
-	if ( this._parent ) {
-		var transform = [];
-		return mat4.multiply( this._parent.getTransform(), this._transform, transform );
-	}
+	if ( this._parent )
+		return this._calcTransf( this._parent.getTransform(), this._transform );
 
 	return this._transform;
 }
 
-/**
- * @remarks This function was based in rotateX from glMatrix.js. We didn't use
- * the original version, because we believe that it would be easier to changes
- * this source file in the future.
- */
 Object3D.prototype.rotateX = function( alpha ) {
 	this._alpha += alpha;
 
 	var s = Math.sin( alpha );
 	var c = Math.cos( alpha );
 
-	var a10 = this._transform[4], a11 = this._transform[5], a12 = this._transform[6], a13 = this._transform[7];
-	var a20 = this._transform[8], a21 = this._transform[9], a22 = this._transform[10], a23 = this._transform[11];
+	var a10 = this._transform[1];
+	var a11 = this._transform[5];
+	var a12 = this._transform[9];
+	var a20 = this._transform[2];
+	var a21 = this._transform[6];
+	var a22 = this._transform[10];
 
-	this._transform[4]  =  a10 * c + a20 * s;
-	this._transform[5]  =  a11 * c + a21 * s;
-	this._transform[6]  =  a12 * c + a22 * s;
-	this._transform[7]  =  a13 * c + a23 * s;
-	this._transform[8]  =  a10 * -s + a20 * c;
-	this._transform[9]  =  a11 * -s + a21 * c;
-	this._transform[10] =  a12 * -s + a22 * c;
-	this._transform[11] =  a13 * -s + a23 * c;
+	this._transform[1]  =  c * a10 + s * a20;
+	this._transform[2]  = -s * a10 + c * a20;
+	this._transform[5]  =  c * a11 + s * a21;
+	this._transform[6]  = -s * a11 + c * a21;
+	this._transform[9]  =  c * a12 + s * a22; this._transform[10] = -s * a12 + c * a22;
 }
 
-/**
- * @remarks This function was based in rotateY from glMatrix.js. We didn't use
- * the original version, because we believe that it would be easier to changes
- * this source file in the future.
- */
 Object3D.prototype.rotateY = function( beta ) {
 	this._beta += beta;
 
 	var s = Math.sin( beta );
 	var c = Math.cos( beta );
+	
+	var a00 = this._transform[0];
+	var a01 = this._transform[4];
+	var a02 = this._transform[8];
+	var a20 = this._transform[2];
+	var a21 = this._transform[6];
+	var a22 = this._transform[10];
 
-	var a00 = this._transform[0], a01 = this._transform[1], a02 = this._transform[2], a03 = this._transform[3];
-	var a20 = this._transform[8], a21 = this._transform[9], a22 = this._transform[10], a23 = this._transform[11];
-
-	this._transform[0]  = a00 * c + a20 * -s;
-	this._transform[1]  = a01 * c + a21 * -s;
-	this._transform[2]  = a02 * c + a22 * -s;
-	this._transform[3]  = a03 * c + a23 * -s;
-
-	this._transform[8]  = a00 * s + a20 * c;
-	this._transform[9]  = a01 * s + a21 * c;
-	this._transform[10] = a02 * s + a22 * c;
-	this._transform[11] = a03 * s + a23 * c;
+	this._transform[0]  =  c * a00 + s * a20;
+	this._transform[2]  = -s * a00 + c * a20;
+	this._transform[4]  =  c * a01 + s * a21;
+	this._transform[6]  = -s * a01 + c * a21;
+	this._transform[8]  =  c * a02 + s * a22;
+	this._transform[10] = -s * a02 + c * a22;
 }
 
-/**
- * @remarks This function was based in rotateZ from glMatrix.js. We didn't use
- * the original version, because we believe that it would be easier to changes
- * this source file in the future.
- */
 Object3D.prototype.rotateZ = function( gama ) {
 	this._gama += gama;
 
 	var s = Math.sin( gama );
 	var c = Math.cos( gama );
 
-	var a00 = this._transform[0], a01 = this._transform[1], a02 = this._transform[2], a03 = this._transform[3];
-	var a10 = this._transform[4], a11 = this._transform[5], a12 = this._transform[6], a13 = this._transform[7];
+	var a00 = this._transform[0];
+	var a01 = this._transform[4];
+	var a02 = this._transform[8];
+	var a10 = this._transform[1];
+	var a11 = this._transform[5];
+	var a12 = this._transform[9];
 
-	this._transform[0] = a00 * c + a10 * s;
-	this._transform[1] = a01 * c + a11 * s;
-	this._transform[2] = a02 * c + a12 * s;
-	this._transform[3] = a03 * c + a13 * s;
-
-	this._transform[4] = a00 * -s + a10 * c;
-	this._transform[5] = a01 * -s + a11 * c;
-	this._transform[6] = a02 * -s + a12 * c;
-	this._transform[7] = a03 * -s + a13 * c;
+	this._transform[0] =  c * a00 + s * a10;
+	this._transform[1] = -s * a00 + c * a10;
+	this._transform[4] =  c * a01 + s * a11;
+	this._transform[5] = -s * a01 + c * a11;
+	this._transform[8] =  c * a02 + s * a12;
+	this._transform[9] = -s * a02 + c * a12;
 }
 
 Object3D.prototype.lookAt = function( object3d ) {
-  	
+
 	var x  = this.getX() - object3d.getX();
-  	var y  = this.getY() - object3d.getY();
-  	var z  = this.getZ() - object3d.getZ();
-	
+	var y  = this.getY() - object3d.getY();
+	var z  = this.getZ() - object3d.getZ();
+
 	if( x == 0.0 && y == 0.0 && z == 0.0 )
 		return;
-	
- 	var distance = Math.sqrt( x*x + y*y + z*z );
-	
+
+	var distance = Math.sqrt( x*x + y*y + z*z );
+
 	x = x/distance;
 	y = y/distance;
 	z = z/distance;
-	
+
 	this._transform[0 ] = z * this.getScaleX();
 	this._transform[1 ] = 0.0;
 	this._transform[2 ] = -x * this.getScaleX();
 	this._transform[3 ] = 0.0;
-	
+
 	this._transform[4 ] = -x * y * this.getScaleY();
 	this._transform[5 ] = (z * z + x * x) * this.getScaleY();
 	this._transform[6 ] = -y * z * this.getScaleY();
 	this._transform[7 ] = 0.0;
-	
+
 	this._transform[8 ] = x * this.getScaleZ();
 	this._transform[9 ] = y * this.getScaleZ();
 	this._transform[10] = z * this.getScaleZ();
 	this._transform[11] = 0.0;
-	
+
 	this._transform[15] = 1.0;
 }
 
@@ -216,7 +240,6 @@ Object3D.prototype.scaleX = function( scaleX ) {
 	this._transform[0] *= scaleX;
 	this._transform[1] *= scaleX;
 	this._transform[2] *= scaleX;
-	this._transform[3] *= scaleX;
 }
 
 Object3D.prototype.scaleY = function( scaleY ) {
@@ -224,7 +247,6 @@ Object3D.prototype.scaleY = function( scaleY ) {
 	this._transform[4] *= scaleY;
 	this._transform[5] *= scaleY;
 	this._transform[6] *= scaleY;
-	this._transform[7] *= scaleY;
 }
 
 Object3D.prototype.scaleZ = function( scaleZ ) {
@@ -232,7 +254,6 @@ Object3D.prototype.scaleZ = function( scaleZ ) {
 	this._transform[8 ] *= scaleZ;
 	this._transform[9 ] *= scaleZ;
 	this._transform[10] *= scaleZ;
-	this._transform[11] *= scaleZ;
 }
 
 Object3D.prototype.scale = function( scaleX, scaleY, scaleZ ) {
@@ -302,27 +323,30 @@ Object3D.prototype.translateX = function( x ) {
 	this._transform[12] += this._transform[0] * x;
 	this._transform[13] += this._transform[1] * x;
 	this._transform[14] += this._transform[2] * x;
-	this._transform[15] += this._transform[3] * x;
 }
 
 Object3D.prototype.translateY = function( y ) {
 	this._transform[12] += this._transform[4] * y;
 	this._transform[13] += this._transform[5] * y;
 	this._transform[14] += this._transform[6] * y;
-	this._transform[15] += this._transform[7] * y;
 }
 
 Object3D.prototype.translateZ = function( z ) {
 	this._transform[12] += this._transform[8 ] * z;
 	this._transform[13] += this._transform[9 ] * z;
 	this._transform[14] += this._transform[10] * z;
-	this._transform[15] += this._transform[11] * z;
 }
 
 Object3D.prototype.translate = function( x, y, z ) {
 	this.translateX( x );
 	this.translateY( y );
 	this.translateZ( z );
+}
+
+Object3D.prototype.setCenter = function( x, y, z ) {
+	this._centerX = x;
+	this._centerY = y;
+	this._centerZ = z;
 }
 
 Object3D.prototype.setPosition = function( x, y, z ) {
