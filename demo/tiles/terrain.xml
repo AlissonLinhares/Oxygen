@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-7"?>
+<tileset>
+	<sprite>images/tiles/tiles.png</sprite>
+	<tile name="i0j00" x="8"   y="103" tw="80" th="70" height="30"></tile>
+	<tile name="i0j01" x="90"  y="118" tw="80" th="55" height="15"></tile>
+	<tile name="i0j02" x="172" y="103" tw="80" th="70" height="30"></tile>
+	<tile name="i0j03" x="254" y="103" tw="80" th="70" height="30"></tile>
+	<tile name="i0j04" x="336" y="103" tw="69" th="70" height="30"></tile>
+	<tile name="i0j05" x="407" y="103" tw="80" th="70" height="30"></tile>
+	<tile name="i0j06" x="489" y="118" tw="80" th="55" height="15"></tile>
+	<tile name="i0j07" x="571" y="103" tw="80" th="70" height="30"></tile>
+	<tile name="i0j08" x="653" y="103" tw="80" th="70" height="30"></tile>
+	<tile name="i0j09" x="735" y="103" tw="59" th="70" height="30"></tile>
+	<tile name="i0j10" x="796" y="103" tw="80" th="70" height="30"></tile>
+	<tile name="i0j11" x="879" y="118" tw="80" th="55" height="15"></tile>
+
+	<tile name="i1j00" x="8"   y="199" tw="80" th="45" height="4"></tile>
+	<tile name="i1j01" x="90"  y="184" tw="80" th="70" height="30"></tile>
+	<tile name="i1j02" x="172" y="184" tw="80" th="70" height="30"></tile>
+	<tile name="i1j03" x="407" y="198" tw="80" th="45" height="4"></tile>
+	<tile name="i1j04" x="489" y="183" tw="80" th="70" height="30"></tile>
+	<tile name="i1j05" x="571" y="183" tw="80" th="70" height="30"></tile>
+	<tile name="i1j06" x="796" y="184" tw="80" th="45" height="4"></tile>
+
+	<tile name="i11j00" x="8"  y="1032" tw="80" th="70" height="30"></tile>
+
+
+	<tile name="water0" x="8"   y="599" tw="80" th="55" height="15"></tile>
+	<tile name="water1" x="90"  y="599" tw="80" th="55" height="15"></tile>
+	<tile name="water2" x="172" y="599" tw="80" th="55" height="15"></tile>
+	<tile name="water3" x="254" y="599" tw="80" th="55" height="15"></tile>
+	<tile name="water4" x="336" y="599" tw="80" th="55" height="15"></tile>
+	<tile name="water5" x="418" y="599" tw="80" th="55" height="15"></tile>
+	<tile name="water6" x="500" y="599" tw="80" th="55" height="15"></tile>
+	<tile name="water7" x="582" y="599" tw="80" th="55" height="15"></tile>
+	<tile name="water8" x="664" y="599" tw="80" th="55" height="15"></tile>
+
+	<tile name="beach0" x="7"   y="731" tw="80" th="55" height="15"></tile>
+	<tile name="beach1" x="89"  y="732" tw="80" th="55" height="15"></tile>
+	<tile name="beach2" x="171" y="732" tw="80" th="55" height="15"></tile>
+	<tile name="beach3" x="253" y="732" tw="80" th="55" height="15"></tile>
+	<tile name="beach4" x="335" y="732" tw="80" th="55" height="15"></tile>
+	<tile name="beach5" x="417" y="732" tw="80" th="55" height="15"></tile>
+	<tile name="beach6" x="499" y="732" tw="80" th="55" height="15"></tile>
+	<tile name="beach7" x="581" y="732" tw="80" th="55" height="15"></tile>
+	<tile name="beach8" x="663" y="732" tw="80" th="55" height="15"></tile>
+	<tile name="beach9" x="745" y="732" tw="80" th="55" height="15"></tile>
+	<tile name="beach10" x="827" y="732" tw="80" th="55" height="15"></tile>
+	<tile name="beach11" x="909" y="732" tw="80" th="55" height="15"></tile>
+	<tile name="beach12" x="991" y="732" tw="80" th="55" height="15"></tile>
+
+
+	<tile name="tree0" x="195" y="1393" tw="108" th="124" height="70"></tile>
+	<tile name="tree1" x="359" y="1363" tw="101" th="154" height="80"></tile>
+</tileset>
+

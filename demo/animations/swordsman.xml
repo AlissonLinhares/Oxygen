@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-7"?>
+<animations>
+	<sprite>images/sprites/swordsman.png</sprite>
+	<animation name="e_walk"  x="0" y="0"   tw="48" th="48" length="7"></animation>
+	<animation name="n_walk"  x="0" y="48"  tw="48" th="48" length="7"></animation>
+	<animation name="ne_walk" x="0" y="96"  tw="48" th="48" length="7"></animation>
+	<animation name="nw_walk" x="0" y="144" tw="48" th="48" length="7"></animation>
+	<animation name="s_walk"  x="0" y="192" tw="48" th="48" length="7"></animation>
+	<animation name="se_walk" x="0" y="240" tw="48" th="48" length="7"></animation>
+	<animation name="sw_walk" x="0" y="288" tw="48" th="48" length="7"></animation>
+	<animation name="w_walk"  x="0" y="336" tw="48" th="48" length="7"></animation>
+</animations>

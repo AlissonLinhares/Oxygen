@@ -1,111 +1,19 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>Object3 Engine</title>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Oxygen</title>
+</head>
 
-		<script type="text/javascript" src="glMatrix-0.9.5.min.js"></script>
-		<script type="text/javascript" src="shader.js"></script>
-		<script type="text/javascript" src="object3d.js"></script>
-		<script type="text/javascript" src="camera.js"></script>
-		<script type="text/javascript" src="shape.js"></script>
-		<script type="text/javascript" src="cube.js"></script>
-		<script type="text/javascript" src="pyramid.js"></script>
-		<script type="text/javascript" src="sphere.js"></script>
-		<script type="text/javascript" src="texture.js"></script>
-		<script type="text/javascript" src="keyboard.js"></script>
-		<!-- <script type="text/javascript" src="fpscamera.js"></script> -->
-		<script type="text/javascript" src="oxygen.js"></script>
-	</head>
+<body>
+	<a href="doc/doc.html">Documentação</a></br></br>
 
-	<body>
-		<form name="form" id="form" action="#">
-			posX: <input type="text" name="name" id="posX" />
-			posY: <input type="text" name="name" id="posY" />
-			posZ: <input type="text" name="name" id="posZ" />
-			alpha: <input type="text" name="name" id="alpha" />
-			beta: <input type="text" name="name" id="beta" />
-			gama: <input type="text" name="name" id="gama" />
-		</form>
+	Demo 1:</br>
+	<a href="demo/demo.html">A simple strategy game</a></br>
 
-		<script type="text/javascript">
-			var o2 = new Oxygen( 512, 512 );
-			var player = new o2.Object3D( 0, 0,-20 );
-			var head = new o2.Cube( 0.0,   2.7, 0 );
-			var lArm = new o2.Cube( 0.0, -19.0, 0 );
-			var rArm = new o2.Cube( 0.0, -19.0, 0 );
-			var lLeg = new o2.Cube( 0.0, -19.0, 0 );
-			var rLeg = new o2.Cube( 0.0, -19.0, 0 );
-			var body = new o2.Cube( 0.0,     0, 0 );
+	Demo 2:</br>
+	<a href="demo/demo2.html">A isometric RPG</a></br>
 
-			var jointLArm = new o2.Cube(-1.4, 2, 0 );
-			var jointRArm = new o2.Cube( 1.4, 2, 0 );
-			var jointLLeg = new o2.Cube(-0.6,-2, 0 );
-			var jointRLeg = new o2.Cube( 0.6,-2, 0 );
-			// var camera = new o2.FPSCamera( 0, 0, 20 );
-			var camera = new o2.Camera( 0, 0, 20 );
-
-			head.texture = new o2.Texture( "head.jpg", Texture.HIGH_DEFINITION );
-			lLeg.texture = new o2.Texture( "leg.jpg" , Texture.LOW_DEFINITION );
-			rLeg.texture = new o2.Texture( "leg.jpg" , Texture.MEDIUM_DEFINITION );
-			lArm.texture = new o2.Texture( "arm.jpg" , Texture.HIGH_DEFINITION );
-			rArm.texture = new o2.Texture( "arm.jpg" , Texture.LOW_DEFINITION );
-			body.texture = new o2.Texture( "body.jpg" , Texture.MEDIUM_DEFINITION );
-
-			head.setScale( 0.6, 0.6,  0.6 );
-			lLeg.setScale( 5, 20, 5 );
-			rLeg.setScale( 5, 20, 5 );
-			lArm.setScale( 3, 17, 3 );
-			rArm.setScale( 3, 17, 3 );
-			body.setScale( 1,  2, 0.6);
-
-			jointLArm.setScale( 0.1, 0.1, 0.1 );
-			jointRArm.setScale( 0.1, 0.1, 0.1 );
-			jointLLeg.setScale( 0.1, 0.1, 0.1 );
-			jointRLeg.setScale( 0.1, 0.1, 0.1 );
-
-			jointLArm.add( lArm );
-			jointRArm.add( rArm );
-			jointLLeg.add( lLeg );
-			jointRLeg.add( rLeg );
-
-			player.add( body );
-			player.add( jointLLeg );
-			player.add( jointRLeg );
-			player.add( jointLArm );
-			player.add( jointRArm );
-			player.add( head );
-
-			jointLArm.rotateX( 0.4 );
-			jointRArm.rotateX( -0.4 );
-			jointRLeg.rotateX( 0.4 );
-			jointLLeg.rotateX( -0.4 );
-
-			var x = -0.1;
-			var cont = 0;
-
-			o2.onUpdate = function() {
-				player.rotateY(0.1);
-
-				if ( ++cont > 10 ) {
-					cont = 0;
-					x *= -1;
-				}
-
-				jointLArm.rotateX( x );
-				jointRArm.rotateX( -x );
-				jointRLeg.rotateX( x );
-				jointLLeg.rotateX( -x );
-
-				document.getElementById('posX').value  = camera.getX();
-				document.getElementById('posY').value  = camera.getY();
-				document.getElementById('posZ').value  = camera.getZ();
-				document.getElementById('alpha').value = camera._alpha;
-				document.getElementById('beta').value  = camera._beta;
-				document.getElementById('gama').value  = camera._gama;
-			}
-
-			o2.start();
-		</script>
+	Demo webgl:</br>
+	<a href="webgl/index.html">A 3D FPS Game (WEBGL)</a></br>
 </body>
 </html>

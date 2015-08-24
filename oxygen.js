@@ -18,141 +18,198 @@
  * along with the Oxygen lib. If not, see <http://www.gnu.org/licenses/>.    *
  *---------------------------------------------------------------------------*/
 
-function Oxygen( width, height ) {
-	var shapes  = [];
-	var cameras = [];
+/****************************** CONSTRUCTOR **********************************
+ * Oxygen is an oriented object isometric HTML5 game engine created by Alisson and
+ * Alandesson, just for fun, in our free time. This engine is very portable and
+ * relatively fast, for a Javascript application.
+ *
+ * The main advantage of this project is the compatibility. This engine is able to
+ * run in almost all current browsers and input devices. Moreover, this engine was
+ * optimized to strategy and old RPG action games.
+ *
+ * The Oxygen class is the core of your application, it contains everything you
+ * need to create an isometric game. You should extend this class to maintain an
+ * oriented object organization. See the demo folder to more information about
+ * how to use this game engine.
+ ****************************************************************************
+ * @constructor
+ * */
+var Oxygen = function() {
+	/** @private {Array<Object3D>} */
+	var cache  = [];
+	/** @private {World} */
+	var world  = new World();
+	/** @private {Canvas} */
+	var canvas = new Canvas();
+	/** @private {Render} */
+	var render = new Render( canvas, world );
+	/** @private {Camera} */
+	var camera = null;
+	/** @private {Oxygen} */
+	var _this  = this;
+	/** @private {Image} */
+	var logo   = Resources.load( "../logo/logo.gif", Resources.IMAGE );
 
-	var canvas            = document.createElement( 'canvas' );
-	canvas.id             = "OxygenView";
-	canvas.width          = width;
-	canvas.height         = height;
-	canvas.style.zIndex   = 1;
-	canvas.style.position = "relative";
-	canvas.style.border   = "1px solid";
-	document.body.appendChild( canvas );
+	/** This procedure configures the browser and initialize the engine. */
+	function init() {
+		_this.onStart();
 
-	try {
-		var gl     = canvas.getContext( "webgl" );
-		gl.width   = width;
-		gl.height  = height;
-		gl.program = createShaderProgram( gl );
+		window.onerror = function( msg, url, line ) {
+			alert( msg + "[url: " + url + "," + line + "]" );
+			_this.onError();
+		}
 
-		gl.enable( gl.DEPTH_TEST );
-		gl.viewport( 0, 0, width, height );
-		gl.clearColor( 0.2, 0.2, 0.2, 1.0 );
-		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
-	} catch(e) {
-		alert( "Error: could not initialise WebGL!" + e );
+		window.onresize = function() {
+			canvas.resize();
+			render.request( Render.RESET );
+			_this.onResize();
+		}
+
+		Timer.init( _this );
+		Mouse.init( _this );
+		Keyboard.init( _this );
+		TouchScreen.init( _this );
 	}
 
-	Oxygen.glClear = function( r, g, b ) {
-		if ( arguments.length != 3 )
-			gl.clearColor( r, g, b, 1.0 );
-		else
-			gl.clearColor( 0.0, 0.0, 0.0, 1.0 );
+	/**
+	 * Main loop: this function is called by default 30 times per second.
+	 **/
+	this.onTimeout = function() {
+		var length = cache.length;
 
-		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
+		if ( camera.isCached() || render.getStatus() == Render.RESET ) {
+			camera.flush();
+
+			for ( var i = 0; i < length; i++ ) {
+				var obj = cache.pop(); // TODO: move cache to Object3D.
+
+				// check if object has a valid cache (Sync remove problem).
+				// TODO: improve this algorithm.
+				if ( obj.getCache() )
+					world.refresh( obj );
+			}
+
+			render.request( Render.RESET );
+		} else if ( length > 0 ) {
+			for ( var i = 0; i < length; i++ ) {
+				var obj = cache.pop();
+				render.refresh( obj );
+				world.refresh( obj );
+			}
+
+			render.request( Render.FLUSH );
+		}
+
+		render.update();
 	}
 
-	Oxygen.glCreateArrayBuffer = function( buffer ) {
-		var result = gl.createBuffer();
-		gl.bindBuffer( gl.ARRAY_BUFFER, result );
-		gl.bufferData( gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW );
-		return result;
+	this.setCamera = function( cam ) {
+		if ( !cam )
+			return;
+
+		camera = cam;
+		render.setCamera( cam );
 	}
 
-	Oxygen.glCreateElementBuffer = function( buffer ) {
-		var result = gl.createBuffer();
-		gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, result );
-		gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, buffer, gl.STATIC_DRAW );
-		return result;
+	this.setTileSize = function( size ) {
+		render.setTileSize( size );
 	}
 
-	Oxygen.glCreateTextureBuffer = function( image, definition ) {
-		var result = gl.createTexture();
+	this.getTileSize = function() {
+		return render.getTileSize();
+	}
 
-		gl.bindTexture( gl.TEXTURE_2D, result );
-		gl.pixelStorei( gl.UNPACK_FLIP_Y_WEBGL, true );
-		gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image );
+	this.getWorld = function() {
+		return world;
+	}
 
-		// check if texture is multiple of 2
-		if ( ( (image.width & 1) == 1 ) || ( (image.height & 1) == 1 ))  {
-			gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE );
-			gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE );
-			gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST );
-			gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST );
-		} else {
-			switch ( definition ) {
-				case Texture.MEDIUM_DEFINITION:
-					gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR );
-					gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST );
-					break;
+	this.getCamera = function() {
+		return camera;
+	}
 
-				case Texture.HIGH_DEFINITION:
-					gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR );
-					gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST );
-					gl.generateMipmap(gl.TEXTURE_2D);
-					break;
+	this.getRender = function() {
+		return render;
+	}
 
-				default:
-					gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST );
-					gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST );
+	this.getCanvas = function() {
+		return canvas;
+	}
+
+	this.getFPS = function() {
+		return ( 1000 / Timer.speed ) - Timer.elapsed + 1;
+	}
+
+	this.start = function() {
+		var x       = canvas.getWidth() / 2;
+		var y       = canvas.getHeight() / 2;
+		var context = canvas.getContext();
+		canvas.clear();
+
+		if ( !camera )
+			this.setCamera( new Camera( 0, 0, 0 ) );
+
+		function loading() {
+			if ( logo.complete ) {
+				var w = logo.width;
+				var h = logo.height;
+				var c = ( Resources.ready / Resources.total )* 100 ;
+				
+				canvas.clear();
+				context.drawImage( logo, x - w / 2, y - h / 2, w, h );
+				context.strokeStyle = "#FFFFFF";
+				context.fillStyle   = "#FFFFFF";
+				context.fillText( c + "%", x - 20, y + 30 );
+			}
+
+			if ( Resources.waiting == 0 ) {
+				init();
+			} else {
+				window.setTimeout( loading, 200 );
 			}
 		}
 
-		gl.bindTexture( gl.TEXTURE_2D, null );
-		return result;
+		loading();
 	}
 
-	Oxygen.glDeleteBuffer = function( buffer ) {
-		gl.deleteBuffer( buffer );
+	/**
+	 * This procedure inserts a element node into the engine.
+	 * Remarks: we use add to abstract the configuration process that ocorres behind the scene.
+	 * @param {Object3D|Terrain} obj: a specific object.
+	 */
+	this.add = function( obj ) {
+		if ( obj instanceof Object3D ) {
+			obj.setCache( cache );
+			world.add( obj );
+		} else if ( obj instanceof Terrain ) {
+			world.setTerrain( obj );
+		}
+		
+		render.request( Render.RESET );
 	}
 
-	Oxygen.getContext = function() {
- 		return gl;
-	}
-
-	Oxygen.addCamera = function( camera ) {
-		cameras.push( camera );
-	}
-
-	Oxygen.addShape = function( shape ) {
-		shapes.push( shape );
-	}
-
-	Oxygen.prototype.update = function( obj ) {
-		this.onUpdate();
-
-		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
-
-		if ( cameras.length > 0 )
-			cameras[0].update();
-
-		for( var i = 0; i < shapes.length; i++ )
-			shapes[i].draw();
-
-		setTimeout( function() { obj.update( obj ); }, 100 );
-	}
-
-	Oxygen.prototype.start = function() {
-		this.onStart();
-		this.update( this );
+	this.remove = function( obj ) {
+		if ( obj instanceof Object3D ) {
+			obj.setCache( null );
+			world.remove( obj );
+			render.request( Render.RESET );
+		} else if ( obj instanceof Terrain ) {
+			world.setTerrain( null );
+		}
 	}
 }
 
-/******************************** Object List ********************************/
-Oxygen.prototype.Object3D   = Object3D;
-Oxygen.prototype.Shape      = Shape;
-Oxygen.prototype.Cube       = Cube;
-Oxygen.prototype.Sphere     = Sphere;
-Oxygen.prototype.Pyramid    = Pyramid;
-Oxygen.prototype.Camera     = Camera;
-Oxygen.prototype.Texture    = Texture;
-Oxygen.prototype.Keyboard   = Keyboard;
-// Oxygen.prototype.FPSCamera  = FPSCamera;
-
-/********************************* Event List ********************************/
-Oxygen.prototype.onUpdate   = function() {};
-Oxygen.prototype.onStart    = function() {};
-Oxygen.prototype.onKeyDown  = function() {};
-Oxygen.prototype.onKeyUp    = function() {};
+/********************************** EVENTS ***********************************/
+Oxygen.prototype.onError      = function() {}
+Oxygen.prototype.onStart      = function() {}
+Oxygen.prototype.onUpdate     = function() {}
+Oxygen.prototype.onKeyDown    = function() {}
+Oxygen.prototype.onKeyUp      = function() {}
+Oxygen.prototype.onMouseDown  = function() {}
+Oxygen.prototype.onMouseUp    = function() {}
+Oxygen.prototype.onMouseMove  = function() {}
+Oxygen.prototype.onClick      = function() {}
+Oxygen.prototype.onTouchStart = function( event ) {}
+Oxygen.prototype.onTouchMove  = function( event ) {}
+Oxygen.prototype.onResize     = function() {}
+Oxygen.prototype.onBlur       = function() {}
+Oxygen.prototype.onFocus      = function() {}
