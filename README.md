@@ -17,13 +17,13 @@ The main advantage of this project is the portability. This engine is able to ru
 The current version is actually the second engine generation. The first one used a WEBGL canvas to render images, instead of canvas2D. We have decided to recreate the entire renderization mechanism because of the compatibility. The WEBGL canvas still experimental and can't run on all devices. Someday, we intend to give WEBGL another chance and came back to the old renderization algorithm, but for now the canvas2D is simple, portable and good enough for what we want to do.
 </p>
 
-### Demos
-## Isometric Engine (canvas2D)
-<a href="http://htmlpreview.github.io/?https://raw.githubusercontent.com/AlissonLinhares/Oxygen/master/demo/demo.html">A simple strategy game</a></br>
-<a href="http://htmlpreview.github.io/?https://raw.githubusercontent.com/AlissonLinhares/Oxygen/master/demo/demo2.html">A isometric RPG</a></br>
+## Demos
+### 3D Isometric engine (canvas2D)
+1. <a href="http://www.alinhares.com/Oxygen/demo/demo.html">A simple strategy game</a></br>
+2. <a href="http://www.alinhares.com/Oxygen/demo/demo2.html">A isometric RPG</a></br>
 	
-## 3D engine (canvas3D)
-<a href="http://htmlpreview.github.io/?https://raw.githubusercontent.com/AlissonLinhares/Oxygen/master/webgl/index.html">A 3D FPS Game (WEBGL)</a></br>
+### 3D Perspective engine (canvas3D)
+1. <a href="http://www.alinhares.com/Oxygen/webgl/index.html">A 3D FPS Game (WEBGL)</a></br>
 
 ### Documentation
 coming soon...
