@@ -3,10 +3,10 @@
 ##
 [![Logo](https://raw.githubusercontent.com/AlissonLinhares/Oxygen/master/logo/logo.png)](#)
 
-### Sobre
+### About
 
 <p style="text-indent: 2em;" align="justify">
-Oxygen is an oriented object isometric HTML5 game engine created by me and my brother, just for fun, in our free time. This engine is very portable and relatively fast, for a Javascript application.
+Oxygen is an object-oriented isometric HTML5 game engine created by me and my brother, just for fun, in our free time. This engine is very portable and relatively fast, for a Javascript application.
 </p>
 
 <p style="text-indent: 2em;" align="justify">
