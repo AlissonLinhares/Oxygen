@@ -26,9 +26,8 @@
  * @param {World} world: reference to the World.
  **/
 var Render = function( canvas, world ) {
-	/** @type {Pool} */
+	/** @type {Array<Object3D>} */
 	var pool = [];
-
 	/** @type {?Camera} */
 	var camera   = null;
 	/** @type {number} */
@@ -61,15 +60,27 @@ var Render = function( canvas, world ) {
 		return canvas;
 	}
 
+	/**
+	 * This procedure changes the default camera.
+	 * @param {Camera} cam: a specific camera.
+	 **/
 	this.setCamera = function( cam ) {
 		camera = cam;
 		this.request( Render.RESET );
 	}
 
+	/**
+	 * This procedure returns the current camera.
+	 * @return {Camera}
+	 **/
 	this.getCamera = function() {
 		return camera;
 	}
 
+	/**
+	 * This procedure checks if an object is visible and put it in a buffer.
+	 * @param {Object3D} obj: a specific object.
+	 **/
 	this.refresh = function( obj ) {
 		obj.update( camera );
 
@@ -82,12 +93,16 @@ var Render = function( canvas, world ) {
 			if ( pool[depth] !== obj )
 				pool.push( obj );
 		} else if ( pool[depth] === obj ) {
-			var obj = pool.pop();
+			obj = pool.pop();
 			obj.depth = depth;
-			pool[depth] = obj
+			pool[depth] = obj;
 		}
 	}
 
+	/**
+	 * This procedure is used to change the render state.
+	 * @param {number} request: a specific object.
+	 **/
 	this.request = function( request ) {
 		if ( action >= request )
 			return;

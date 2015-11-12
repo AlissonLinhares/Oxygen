@@ -68,7 +68,7 @@ var Oxygen = function() {
 		Timer.init( _this );
 		Mouse.init( _this );
 		Keyboard.init( _this );
-		TouchScreen.init( _this );
+		TouchPad.init( _this );
 	}
 
 	/**
@@ -201,15 +201,36 @@ var Oxygen = function() {
 /********************************** EVENTS ***********************************/
 Oxygen.prototype.onError      = function() {}
 Oxygen.prototype.onStart      = function() {}
-Oxygen.prototype.onUpdate     = function() {}
-Oxygen.prototype.onKeyDown    = function() {}
-Oxygen.prototype.onKeyUp      = function() {}
-Oxygen.prototype.onMouseDown  = function() {}
-Oxygen.prototype.onMouseUp    = function() {}
-Oxygen.prototype.onMouseMove  = function() {}
-Oxygen.prototype.onClick      = function() {}
-Oxygen.prototype.onTouchStart = function( event ) {}
-Oxygen.prototype.onTouchMove  = function( event ) {}
 Oxygen.prototype.onResize     = function() {}
 Oxygen.prototype.onBlur       = function() {}
 Oxygen.prototype.onFocus      = function() {}
+Oxygen.prototype.onUpdate     = function() {}
+Oxygen.prototype.onKeyDown    = function() {}
+Oxygen.prototype.onKeyUp      = function() {}
+
+/**
+ * This procedure is automatically executed when an user click/tap on the screen.
+ * @param {Finger} event
+ **/
+Oxygen.prototype.onTap        = function( event ) {}
+
+/**
+ * This procedure is automatically executed when an user press something on the
+ * screen.
+ * @param {Finger} event
+ **/
+Oxygen.prototype.onPress      = function( event ) {}
+
+/**
+ * This procedure is automatically executed when an user drag something on the
+ * screen.
+ * @param {Finger} event
+ **/
+Oxygen.prototype.onDrag       = function( event ) {}
+
+/**
+ * This procedure is automatically executed when an user stops to interaction.
+ * @param {Finger} event
+ **/
+Oxygen.prototype.onLeave      = function( event ) {}
+

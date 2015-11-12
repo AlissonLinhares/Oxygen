@@ -30,7 +30,7 @@ var Grid = function() {
 /*************************** VARIABLES SECTION *******************************/
 /**
  * @private
- * @type {Array<Array<Array<Object3D>>>}
+ * @type {Array<Array<Array<Object3D>>>|Array<Array<Array<undefined>>>}
  */
 Grid.prototype.cache = null;
 

@@ -74,21 +74,21 @@ var Object3D = function( x, y, z ) {
 /** @type {number} */ Object3D.tileWidth  = 50;
 /** @type {number} */ Object3D.tileHeight = 50;
 
-/** @type {number} */ Object3D.prototype.x           = 0.0;
-/** @type {number} */ Object3D.prototype.y           = 0.0;
-/** @type {number} */ Object3D.prototype.z           = 0.0;
-/** @type {number} */ Object3D.prototype.sx          = 1.0;
-/** @type {number} */ Object3D.prototype.sy          = 1.0;
-/** @type {number} */ Object3D.prototype.sz          = 1.0;
+/** @type {number} */ Object3D.prototype.x  = 0.0;
+/** @type {number} */ Object3D.prototype.y  = 0.0;
+/** @type {number} */ Object3D.prototype.z  = 0.0;
+/** @type {number} */ Object3D.prototype.sx = 1.0;
+/** @type {number} */ Object3D.prototype.sy = 1.0;
+/** @type {number} */ Object3D.prototype.sz = 1.0;
 
-/** @type {number} */ Object3D.prototype.maxX        = 0.0;
-/** @type {number} */ Object3D.prototype.maxY        = 0.0;
-/** @type {number} */ Object3D.prototype.maxZ        = 0.0;
-/** @type {number} */ Object3D.prototype.minX        = 0.0;
-/** @type {number} */ Object3D.prototype.minY        = 0.0;
-/** @type {number} */ Object3D.prototype.minZ        = 0.0;
-/** @type {number} */ Object3D.prototype.force       = [0.0, 0.0, 0.0];
-/** @type {boolean} */ Object3D.prototype.physics    = false;
+/** @type {number} */ Object3D.prototype.maxX = 0.0;
+/** @type {number} */ Object3D.prototype.maxY = 0.0;
+/** @type {number} */ Object3D.prototype.maxZ = 0.0;
+/** @type {number} */ Object3D.prototype.minX = 0.0;
+/** @type {number} */ Object3D.prototype.minY = 0.0;
+/** @type {number} */ Object3D.prototype.minZ = 0.0;
+/** @type {boolean} */ Object3D.prototype.physics     = false;
+/** @type {Array<number>} */ Object3D.prototype.force = [0.0, 0.0, 0.0];
 
 /** @type {number} */ Object3D.prototype.depth       = 0;
 /** @type {number} */ Object3D.prototype.screenX     = 0.0;

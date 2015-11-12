@@ -1,3 +1,7 @@
+
+/**
+ * @constructor
+ */
 var Level = function () {
 	// this.sound = new Sound( "sounds/BlankCanvas.ogg" )
 	this.tileset = new TileSet( "tiles/terrain.xml" );

@@ -32,22 +32,48 @@
 		<script type="text/javascript" src="../media/texture.js"></script>
 		<script type="text/javascript" src="../media/resources.js"></script>
 		<script type="text/javascript" src="../media/tileset.js"></script>
-		<script type="text/javascript" src="swordsman.js"></script>
 	</head>
 
 	<body>
-		<font color="white">
-			FPS: <label name="fps" id="fps">23.630000000000003</label><br>
-			ARMY: <label name="army" id="army">100</label><br>
-			PLAYER: left/right/up/down<br>
-			CAMERA: w/s/a/d <br>
-			ZOOM: i/o (Experimental) <br>
-			PROJECTION: e/q (Experimental) <br>
-			ADD SOLDIERS: m <br>
-			REMOVE SOLDIERS: n <br>
-		</font>
+		<script type="text/javascript">
+			var Editor = function () {
+				Oxygen.call( this );
 
-		<script type="text/javascript" src="demo.js"></script>
-		<!-- <script type="text/javascript" src="demo&#45;min.js"></script> -->
+				var terrain = new Terrain();
+				terrain.genTileAt = function( x, z ) {
+					var v1 = [-0.5, 0  ];
+					var v2 = [ 0  , 0.5];
+					var v3 = [ 0.5, 0  ];
+					var v4 = [ 0  ,-0.5];
+
+					var shape = new Shape( x, 0, z );
+					shape.addFace( new Face( [ v1, v2, v3, v4 ], "#222222" ) );
+					shape.showWireframe( true );
+					shape.sy = 0;
+					return shape;
+				}
+ var wire = new Cube( 0, 0, 0 );
+ wire.showWireframe( true );
+ wire.getFaces()[0].setTexture( "#FF0000" );
+ wire.getFaces()[1].setTexture( "#FF0000" );
+ wire.getFaces()[2].setTexture( "#FF0000" );
+
+ wire.setScale(1.1, 1.1, 1.1 );
+				this.add( new Cube( 0, 0, 0 ) );
+				this.add( new Cube( 1, 0, 0 ) );
+				this.add( new Cube( 0, 0, 1 ) );
+				this.add( new Cube( 1, 0, 1 ) );
+				this.add( new Cube( -1, 0, 1 ) );
+				this.add( new Cube( -1, 0, -1 ) );
+				this.add( wire );
+
+				this.add( terrain );
+			}
+
+			Editor.prototype = Object.create( Oxygen.prototype );
+
+			var editor = new Editor();
+			editor.start();
+		</script>
 	</body>
 </html>

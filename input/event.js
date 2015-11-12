@@ -19,48 +19,56 @@
  *---------------------------------------------------------------------------*/
 
 /****************************** CONSTRUCTOR **********************************
- * @final
  * @constructor
+ * @param {number} x: x-coordinate
+ * @param {number} y: y-coordinate
+ * @param {number} id: identification code
+ * @param {Oxygen} engine: engine reference
+ *
+ * This class is an abstraction of an touchable area on the screen.
  */
-var TouchPad = function() {};
-
-/***************************** PUBLIC SECTION ********************************/
-/**
- * This procedure configures the browser to map all touch events to the
- * game engine.
- * @param {Oxygen} engine: engine reference.
- **/
-TouchPad.init = function( engine ) {
-	/** @private {Array<Finger>} */
-	var fingers = [];
-
-	document.ontouchstart = function( event ) {
-
-	}
-
-	document.ontouchmove = function( event ) {
-
-	}
-
-	document.ontouchend = function( event ) {
-
-	}
+var Finger = function( x, y, id, engine ) {
+	this.x = x;
+	this.y = y;
+	this.id = id;
+	this.engine = engine;
 }
-			/** @override */
-			// Demo.prototype.onTouchStart = function( event ) {
-			// 	Demo._x = event.targetTouches[0].pageX;
-			// 	Demo._y = event.targetTouches[0].pageY;
-			// }
 
-			// /** @override */
-			// Demo.prototype.onTouchMove = function( event ) {
-			// 	var camera = this.getCamera();
-			// 	var x = event.targetTouches[0].pageX;
-			// 	var y = event.targetTouches[0].pageY;
+/**
+ * This function returns the Y position (cartesian system).
+ * @return {number}
+ **/
+Finger.prototype.getY = function() {
+	return this.y;
+}
 
-			// 	camera.forward( (y - Demo._y) / 50 );
-			// 	camera.left( (x - Demo._x) / 50 );
+/**
+ * This function returns the X position (cartesian system).
+ * @return {number}
+ **/
+Finger.prototype.getX = function() {
+	return this.x;
+}
 
-			// 	Demo._x = x;
-			// 	Demo._y = y;
-			// }
+/**
+ * This procedure returns the position of the mouse in the world.
+ * @return {{x:number, y:number}} cartesian coordinate.
+ **/
+Finger.prototype.getAxes = function() {
+	var camera = this.engine.getCamera();
+	var canvas = this.engine.getCanvas();
+	var centerX = canvas.getWidth() / 2;
+	var centerY = canvas.getHeight() / 2;
+	var x = (  this.x - centerX ) / Object3D.tileWidth  + camera.getIsoX();
+	var y = ( -this.y + centerY ) / Object3D.tileHeight - camera.getIsoY();
+
+	return { "x": x - y , "y": x + y };
+}
+
+/**
+ * This function returns an identification number
+ * @return {number}
+ **/
+Finger.prototype.getID = function() {
+	return this.id;
+}

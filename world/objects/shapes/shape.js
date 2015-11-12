@@ -33,6 +33,10 @@ var Shape = function( x, y, z ) {
 
 Shape.prototype = Object.create( Object3D.prototype );
 
+/*************************** VARIABLES SECTION *******************************/
+/** @type {boolean} */ Shape.prototype.wireframe = false;
+
+
 /***************************** PUBLIC SECTION ********************************/
 /**
  * This procedure inserts a face into this shape.
@@ -90,6 +94,14 @@ Shape.prototype.build = function() {
 }
 
 /**
+ * This procedure is used to activate the wireframe renderization.
+ * @param {boolean} wireframe: true/false
+ */
+Shape.prototype.showWireframe = function( wireframe ) {
+	this.wireframe = wireframe;
+}
+
+/**
  * This procedure is used by the Render to draw this shape on the screen.
  * @param {?} context
  */
@@ -108,11 +120,14 @@ Shape.prototype.draw = function( context ) {
 				context.lineTo( vertex[j][0], vertex[j][1] );
 
 			context.lineTo( vertex[0][0], vertex[0][1] );
-			context.fillStyle = face.getTexture();
-			context.fill();
 
-// 			context.strokeStyle = "#000000";
-// 			context.stroke();
+			if ( this.wireframe ) {
+				context.strokeStyle = face.getTexture();
+				context.stroke();
+			} else {
+				context.fillStyle = face.getTexture();
+				context.fill();
+			}
 		}
 // 
 // 		context.beginPath();

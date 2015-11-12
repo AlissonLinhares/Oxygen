@@ -34,7 +34,7 @@ var Keyboard = {};
 /** @const */ var KEY_PAUSE         = 19;
 /** @const */ var KEY_CAPS_LOCK     = 20;
 /** @const */ var KEY_ESCAPE        = 27;
-/** @const */ var KEY_SPACE_BAR     = 32;
+/** @const */ var KEY_SPACE         = 32;
 /** @const */ var KEY_PAGE_UP       = 33;
 /** @const */ var KEY_PAGE_DOWN     = 34;
 /** @const */ var KEY_END           = 35;
@@ -126,7 +126,7 @@ var Keyboard = {};
 /** @const */ var KEY_SINGLE_QUOTE  = 222;
 
 /*************************** VARIABLES SECTION *******************************/
-/** @private {Array<boolean>} */ Keyboard.keyMap = [];
+/** @private {Array<number>} */ Keyboard.keyMap = [];
 
 /***************************** PUBLIC SECTION ********************************/
 /**

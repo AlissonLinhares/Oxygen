@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-7"?>
 <animations>
 	<sprite>images/sprites/swordsman.png</sprite>
 	<animation name="e_walk"  x="0" y="0"   tw="48" th="48" length="7"></animation>

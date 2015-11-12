@@ -29,11 +29,6 @@ var Mouse = {};
 /** @const */ var MOUSE_CENTER = 2;
 /** @const */ var MOUSE_RIGHT  = 3;
 
-/*************************** VARIABLES SECTION *******************************/
-/** @private {Array<boolean>} */ Mouse.btmap = [];
-/** @private {number}         */ Mouse.x     = 0;
-/** @private {number}         */ Mouse.y     = 0;
-
 /***************************** PUBLIC SECTION ********************************/
 /**
  * This procedure configures the browser and map all Mouse's events to the
@@ -41,62 +36,60 @@ var Mouse = {};
  * @param {Oxygen} engine: engine reference.
  **/
 Mouse.init = function( engine ) {
-	document.onclick = function( event ) {
-		engine.onClick();
-	}
+	/** @private {Array<boolean>} */
+	var btmap = [];
+	/** @private {Finger} */
+	var mouse = new Finger( 0, 0, 0, engine );
+	/** @private {number} */
+	var delta = 0;
 
 	document.onmousedown = function( event ) {
-		Mouse.btmap[event.which] = true;
-		engine.onMouseDown();
+		mouse.x = event.pageX;
+		mouse.y = event.pageY;
+		btmap[event.which] = true;
+
+		delta = 10;
+		engine.onPress( mouse );
 	}
 
 	document.onmouseup = function( event ) {
-		Mouse.btmap[event.which] = false;
-		engine.onMouseUp();
+		if ( delta > 0 )
+			engine.onTap( mouse );
+
+		btmap[event.which] = false;
+		engine.onLeave( mouse );
 	}
 
 	document.onmousemove = function( event ) {
-		Mouse.x = event.pageX;
-		Mouse.y = event.pageY;
-		engine.onMouseMove();
+		mouse.x = event.pageX;
+		mouse.y = event.pageY;
+		delta--;
+
+		if ( Mouse.isDown( MOUSE_LEFT ) )
+			engine.onDrag( mouse );
 	}
 
 	/**
-	 * This procedure returns the position of the mouse in the world.
-	 * @return {{x:number, y:number}} cartesian coordinate.
-	 **/
-	Mouse.getViewAxes = function() {
-		var camera = engine.getCamera();
-		var canvas = engine.getCanvas();
-		var centerX = canvas.getWidth() / 2;
-		var centerY = canvas.getHeight() / 2;
-		var x = (  Mouse.x - centerX ) / Object3D.tileWidth  + camera.getIsoX();
-		var y = ( -Mouse.y + centerY ) / Object3D.tileHeight - camera.getIsoY();
-
-		return { "x": x - y , "y": x + y};
+	* This procedure returns the Y position of the mouse cursor.
+	* @return {number}
+	**/
+	Mouse.getScreenY = function() {
+		return mouse.y;
 	}
-}
 
-/**
- * This procedure returns the Y position of the mouse cursor.
- * @return {number}
- **/
-Mouse.getScreenY = function() {
-	return Mouse.y;
-}
+	/**
+	* This procedure returns the X position of the mouse cursor.
+	* @return {number}
+	**/
+	Mouse.getScreenX = function() {
+		return mouse.x;
+	}
 
-/**
- * This procedure returns the X position of the mouse cursor.
- * @return {number}
- **/
-Mouse.getScreenX = function() {
-	return Mouse.x;
-}
-
-/**
- * This procedure verifies if some specific button is down.
- * @param {number} bt: button code.
- **/
-Mouse.isDown = function( bt ) {
-	return Mouse.btmap[ bt ];
+	/**
+	* This procedure verifies if some specific button is down.
+	* @param {number} bt: button code.
+	**/
+	Mouse.isDown = function( bt ) {
+		return btmap[ bt ];
+	}
 }

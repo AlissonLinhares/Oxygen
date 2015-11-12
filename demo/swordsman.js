@@ -21,8 +21,8 @@ Swordsman.prototype.sy = 1.0;
 Swordsman.prototype.jump = 0;
 Swordsman.prototype.isFlying = false;
 
-Swordsman.prototype.onMouseDown = function() {
-	this.target = Mouse.getViewAxes();
+Swordsman.prototype.onTap = function( event ) {
+	this.target = event.getAxes();
 }
 
 Swordsman.prototype.onUpdate = function() {
@@ -38,7 +38,7 @@ Swordsman.prototype.onUpdate = function() {
 		if ( !this.moveTo( this.target.x, 0, this.target.y, this.speed * Timer.elapsed ) )
 			this.target = null;
 	} else {
-		if ( Keyboard.isDown( KEY_B ) && !this.isFlying )
+		if ( Keyboard.isDown( KEY_SPACE ) && !this.isFlying )
 			this.jump = 5;
 
 		if ( Keyboard.isDown( KEY_UP ) ) {

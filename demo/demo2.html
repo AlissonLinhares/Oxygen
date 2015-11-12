@@ -24,6 +24,7 @@
 		<script type="text/javascript" src="../render/canvas.js"></script>
 		<script type="text/javascript" src="../render/render.js"></script>
 		<script type="text/javascript" src="../render/pool.js"></script>
+		<script type="text/javascript" src="../input/event.js"></script>
 		<script type="text/javascript" src="../input/mouse.js"></script>
 		<script type="text/javascript" src="../input/keyboard.js"></script>
 		<script type="text/javascript" src="../input/touch.js"></script>
@@ -93,21 +94,16 @@
 			}
 
 			/** @override */
-			Demo.prototype.onMouseDown = function() {
-				// this.player.onMouseDown();
+			Demo.prototype.onPress = function( event ) {
+				Demo._x = event.getX();
+				Demo._y = event.getY();
 			}
 
 			/** @override */
-			Demo.prototype.onTouchStart = function( event ) {
-				Demo._x = event.targetTouches[0].pageX;
-				Demo._y = event.targetTouches[0].pageY;
-			}
-
-			/** @override */
-			Demo.prototype.onTouchMove = function( event ) {
+			Demo.prototype.onDrag = function( event ) {
 				var camera = this.getCamera();
-				var x = event.targetTouches[0].pageX;
-				var y = event.targetTouches[0].pageY;
+				var x = event.getX();
+				var y = event.getY();
 
 				camera.forward( (y - Demo._y) / 50 );
 				camera.left( (x - Demo._x) / 50 );
