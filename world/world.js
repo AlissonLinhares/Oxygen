@@ -97,6 +97,7 @@ var World = function() {
 	 * This procedure returns all objects at a certain position.
 	 * @param {number} x: x-coordinate.
 	 * @param {number} z: z-coordinate.
+	 * @return {Array<Object3D>}
 	 */
 	this.getObjectsAt = function( x, z ) {
 		return grid.getObjectsAt( x, z );

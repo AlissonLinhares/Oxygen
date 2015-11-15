@@ -55,6 +55,6 @@ Terrain.prototype.genTileAt = function( x, z ) {
 
 	var shape = new Shape( x, y, z );
 	shape.addFace( new Face( [ v1, v2, v3, v4 ], "#333333" ) );
-	shape.sy = 0;
+	shape.setScaleY( 0 );
 	return shape;
 }

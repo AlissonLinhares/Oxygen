@@ -89,7 +89,7 @@ var Render = function( canvas, world ) {
 		var min = -tileSize;
 		var depth = obj.depth;
 
-		if ( x >= min && x <= canvas.getWidth() &&  y >= min && y <= canvas.getHeight() ) {
+		if ( obj.isVisible() && x >= min && x <= canvas.getWidth() &&  y >= min && y <= canvas.getHeight() ) {
 			if ( pool[depth] !== obj )
 				pool.push( obj );
 		} else if ( pool[depth] === obj ) {
@@ -149,6 +149,30 @@ var Render = function( canvas, world ) {
 		}
 	}
 
+	/**
+	 * This procedure returns the object in a certain screen position
+	 * @return {Object3D} 3D Object.
+	 **/
+	this.getObjectAt = function( x, y ) {
+		var centerX = canvas.getWidth() / 2;
+		var centerY = canvas.getHeight() / 2;
+		var dx = (  x - centerX ) / Object3D.tileWidth  + camera.getIsoX();
+		var dy = ( -y + centerY ) / Object3D.tileHeight - camera.getIsoY();
+
+		x = dx - dy;
+		y = dx + dy;
+
+		for ( var i = 0, len = pool.length; i < len; i++ ) {
+			var obj = pool[i];
+
+			// checks if a point (x,y) is inside this object.
+			if ( obj.cache !== null && obj.contains( x, y ) )
+				return obj;
+		}
+
+		return null;
+	}
+
 	function reset() {
 		pool = [];
 
@@ -188,8 +212,11 @@ var Render = function( canvas, world ) {
 
 				for( var s = 0; s < objects.length; s++ ) {
 					var obj = objects[s];
-					obj.update( camera );
-					pool.push( obj );
+
+					if ( obj.isVisible() ) {
+						obj.update( camera );
+						pool.push( obj );
+					}
 				}
 
 				tx++;

@@ -10,7 +10,6 @@ var Swordsman = function( x, y, z ) {
 	this.animation.setSpeed( 0.5 );
 	Tile.call( this, this.animation, x, y, z );
 	this.setScale( 0.6, 1, 0.6 );
-	// Cube.call( this, x, y, z );
 }
 
 Swordsman.prototype = Object.create( Tile.prototype );
@@ -38,7 +37,7 @@ Swordsman.prototype.onUpdate = function() {
 		if ( !this.moveTo( this.target.x, 0, this.target.y, this.speed * Timer.elapsed ) )
 			this.target = null;
 	} else {
-		if ( Keyboard.isDown( KEY_SPACE ) && !this.isFlying )
+		if ( Keyboard.isDown( KEY_B ) && !this.isFlying )
 			this.jump = 5;
 
 		if ( Keyboard.isDown( KEY_UP ) ) {

@@ -94,13 +94,13 @@ var Object3D = function( x, y, z ) {
 /** @type {number} */ Object3D.prototype.screenX     = 0.0;
 /** @type {number} */ Object3D.prototype.screenY     = 0.0;
 /** @type {number} */ Object3D.prototype.orientation = Object3D.NORTHEAST;
-/** @type {boolean} */ Object3D.prototype.visible    = true;
 
-/** @type {number} */           Object3D.prototype.key    = 0;
-/** @type {boolean} */          Object3D.prototype.cached = false;
-/** @type {?Array<Object3D>} */ Object3D.prototype.cache  = null;
+/** @type {number} */           Object3D.prototype.key      = 0;
+/** @type {boolean} */          Object3D.prototype.visible  = true;
+/** @type {boolean} */          Object3D.prototype.cached   = false;
+/** @type {?Array<Object3D>} */ Object3D.prototype.cache    = null;
 /** @type {Array<Object3D>} */  Object3D.prototype.children = null;
-/** @type {?Object3D} */        Object3D.prototype.parent = null;
+/** @type {?Object3D} */        Object3D.prototype.parent   = null;
 
 /***************************** PUBLIC SECTION ********************************/
 Object3D.prototype.setPhysics = function( physics ) {
@@ -151,7 +151,16 @@ Object3D.prototype.remove = function( child ) {
 
 /** This procedure removes all child nodes from this object. */
 Object3D.prototype.removeAll = function() {
-	this.children = [];
+	for ( var i = 0, len = this.children; i < len; i++ )
+		this.remove( this.children[i] );
+}
+
+/**
+ * Check if this object is visible.
+ * @return {boolean}
+ **/
+Object3D.prototype.isVisible = function() {
+	return this.visible;
 }
 
 /** This procedure is used to discard all cached information. */
@@ -216,6 +225,21 @@ Object3D.prototype.overlap = function( obj ) {
 }
 
 /**
+ * This procedure checks if a point (x,y) is inside this object.
+ * @param {number} x: screen coordinate;
+ * @param {number} y: screen coordinate;
+ */
+Object3D.prototype.contains = function( x, y ) {
+	function intervalOverlap( a, b, c ) {
+		return ( c >= a ) && ( c < b );
+	}
+
+	return intervalOverlap( this.minX + this.minZ, this.maxX + this.maxZ, x + y ) &&
+	       intervalOverlap( this.minX - this.maxY, this.maxX - this.minY, x     ) &&
+	       intervalOverlap( this.minZ + this.minY, this.maxZ + this.maxY, y     );
+}
+
+/**
  * This procedure inserts a child node into this object.
  * Complexity: O(1)
  * @param {Object3D} child: a specific object.
@@ -244,14 +268,6 @@ Object3D.prototype.getChildren = function() {
  **/
 Object3D.prototype.getParent = function() {
 	return this.parent;
-}
-
-/**
- * Check if this object is visible.
- * @return {boolean}
- **/
-Object3D.prototype.isVisible = function() {
-	return this.visible;
 }
 
 /**
@@ -658,6 +674,10 @@ Object3D.prototype.scaleX = function( sx ) {
 	sx = sx / 2;
 	this.maxX += sx;
 	this.minX -= sx;
+
+	for ( var i = this.children.length - 1; i >= 0; i-- )
+		this.children[i].scaleX( sx );
+
 	this.cacheThisOperation();
 }
 
@@ -668,6 +688,10 @@ Object3D.prototype.scaleX = function( sx ) {
 Object3D.prototype.scaleY = function( sy ) {
 	this.sy   += sy;
 	this.maxY += sy;
+
+	for ( var i = this.children.length - 1; i >= 0; i-- )
+		this.children[i].scaleX( sy );
+
 	this.cacheThisOperation();
 }
 
@@ -681,6 +705,10 @@ Object3D.prototype.scaleZ = function( sz ) {
 	sz = sz / 2;
 	this.maxZ += sz;
 	this.minZ -= sz;
+
+	for ( var i = this.children.length - 1; i >= 0; i-- )
+		this.children[i].scaleX( sz );
+
 	this.cacheThisOperation();
 }
 
@@ -703,6 +731,10 @@ Object3D.prototype.scale = function( sx, sy, sz ) {
 	this.maxZ += sz;
 	this.minZ -= sz;
 	this.maxY += sy;
+
+	for ( var i = this.children.length - 1; i >= 0; i-- )
+		this.children[i].scale( sx, sy, sz );
+
 	this.cacheThisOperation();
 }
 
@@ -726,6 +758,73 @@ Object3D.prototype.setScale = function( sx, sy, sz ) {
 	this.minZ = this.z - sz;
 	this.maxY = this.y + sy;
 	this.minY = this.y;
+
+	for ( var i = this.children.length - 1; i >= 0; i-- )
+		this.children[i].setScale( sx, sy, sz );
+
+	this.cacheThisOperation();
+}
+
+/**
+ * This function configures the object X scale.
+ * @param {number} sx: new scale.
+ **/
+Object3D.prototype.setScaleX = function( sx ) {
+	this.sx = sx;
+
+	for ( var i = this.children.length - 1; i >= 0; i-- )
+		this.children[i].setScaleX( sx );
+
+	sx = sx / 2;
+	this.maxX = this.x + sx;
+	this.minX = this.x - sx;
+
+	this.cacheThisOperation();
+}
+
+/**
+ * This function configures the object Y scale.
+ * @param {number} sy: new scale.
+ **/
+Object3D.prototype.setScaleY = function( sy ) {
+	this.sy = sy;
+
+	this.maxY = this.y + sy;
+	this.minY = this.y;
+
+	for ( var i = this.children.length - 1; i >= 0; i-- )
+		this.children[i].setScaleY( sy );
+
+	this.cacheThisOperation();
+}
+
+/**
+ * This function configures the object Z scale.
+ * @param {number} sz: new scale.
+ **/
+Object3D.prototype.setScaleZ = function( sz ) {
+	this.sz = sz;
+
+	for ( var i = this.children.length - 1; i >= 0; i-- )
+		this.children[i].setScale( sz );
+
+	sz = sz / 2;
+	this.maxZ = this.z + sz;
+	this.minZ = this.z - sz;
+
+	this.cacheThisOperation();
+}
+
+/**
+ * This procedure sets this object visibility.
+ * @param {boolean} visible: true/false
+ **/
+Object3D.prototype.setVisible = function( visible ) {
+	this.visible = visible;
+
+	for ( var i = this.children.length - 1; i >= 0; i-- )
+		this.children[i].setVisible( visible );
+
 	this.cacheThisOperation();
 }
 

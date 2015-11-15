@@ -129,7 +129,7 @@ Shape.prototype.draw = function( context ) {
 				context.fill();
 			}
 		}
-// 
+
 // 		context.beginPath();
 // 		context.fillStyle = "#FF0000";
 // 		context.fillText( this.depth, this.screenX, this.screenY, Object3D.tileWidth, Object3D.tileHeight );
