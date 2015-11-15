@@ -54,7 +54,7 @@ Finger.prototype.getX = function() {
  * This procedure returns the position of the mouse in the world.
  * @return {{x:number, y:number}} cartesian coordinate.
  **/
-Finger.prototype.getAxes = function() {
+Finger.prototype.getAxis = function() {
 	var camera = this.engine.getCamera();
 	var canvas = this.engine.getCanvas();
 	var centerX = canvas.getWidth() / 2;

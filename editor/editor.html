@@ -99,6 +99,9 @@
 
 			Editor.prototype.onPress = function( event ) {
 				this.selection.onPress( event );
+
+				this.mouseX = event.getX();
+				this.mouseY = event.getY();
 			}
 
 			Editor.prototype.onDrag = function( event ) {
@@ -107,6 +110,22 @@
 
 			Editor.prototype.onTap = function( event ) {
 				this.selection.onTap( event );
+			}
+
+			Editor.prototype.onUpdate = function() {
+				var camera = this.getCamera();
+
+				if ( Keyboard.isDown( KEY_W ) ) {
+					camera.forward( 0.5 * Timer.elapsed );
+				} else if ( Keyboard.isDown( KEY_S ) ) {
+					camera.backward( 0.5 * Timer.elapsed );
+				}
+
+				if ( Keyboard.isDown( KEY_A ) ) {
+					camera.left( 0.5 * Timer.elapsed );
+				} else if ( Keyboard.isDown( KEY_D ) ) {
+					camera.right( 0.5 * Timer.elapsed );
+				}
 			}
 
 			var editor = new Editor();

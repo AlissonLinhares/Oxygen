@@ -21,7 +21,7 @@ Swordsman.prototype.jump = 0;
 Swordsman.prototype.isFlying = false;
 
 Swordsman.prototype.onTap = function( event ) {
-	this.target = event.getAxes();
+	this.target = event.getAxis();
 }
 
 Swordsman.prototype.onUpdate = function() {

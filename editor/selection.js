@@ -110,14 +110,14 @@ Selection.prototype.onKeyDown = function() {
 }
 
 Selection.prototype.onPress = function( event ) {
-	this.axes = event.getAxes();
+	this.axis = event.getAxis();
 }
 
 Selection.prototype.onDrag = function( event ) {
-	var axes = event.getAxes();
-	var x = axes.x - this.axes.x;
-	var z = axes.y - this.axes.y;
-	this.axes = axes;
+	var axis = event.getAxis();
+	var x = axis.x - this.axis.x;
+	var z = axis.y - this.axis.y;
+	this.axis = axis;
 
 	for ( var i = 0, len = this.list.length; i < len; i++ )
 		this.list[i].translate( x, 0, z );
